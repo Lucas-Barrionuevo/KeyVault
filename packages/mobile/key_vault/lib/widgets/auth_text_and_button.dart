@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:key_vault/theme/app_theme.dart';
 
 class AuthTextAndButton extends StatelessWidget {
   final Function onTap;
@@ -27,7 +28,7 @@ class AuthTextAndButton extends StatelessWidget {
               TextSpan(
                 recognizer: TapGestureRecognizer()..onTap = () => onTap(),
                 text: text2,
-                style: const TextStyle(color: Color(0xffF0C029)),
+                style: const TextStyle(color: AppTheme.primary),
               )
             ]),
       ),
