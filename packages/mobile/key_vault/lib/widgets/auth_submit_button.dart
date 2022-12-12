@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/theme/app_theme.dart';
 
 class AuthSubmitButton extends StatelessWidget {
   const AuthSubmitButton({super.key});
@@ -7,10 +8,10 @@ class AuthSubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: () {},
-      highlightColor: const Color(0xffF0C029),
+      highlightColor: AppTheme.primary,
       highlightElevation: 1,
       elevation: 0,
-      color: const Color(0xffF0C029),
+      color: AppTheme.primary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
         width: double.infinity,

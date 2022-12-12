@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 import 'package:key_vault/widgets/widgets.dart';
 
@@ -44,13 +45,10 @@ class _ForgotMyPasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        style: TextButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            foregroundColor: const Color(0xffF0C029)),
         onPressed: () {},
         child: const Text(
           "Olvidé mi contraseña",
-          style: TextStyle(color: Color(0xffF0C029)),
+          style: TextStyle(color: AppTheme.primary),
         ));
   }
 }
@@ -67,7 +65,7 @@ class _LoginForm extends StatelessWidget {
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
-            cursorColor: const Color(0xffF0C029),
+            cursorColor: AppTheme.primary,
             decoration:
                 InputDecorations.authInputDecoration(labelText: 'Email'),
           ),

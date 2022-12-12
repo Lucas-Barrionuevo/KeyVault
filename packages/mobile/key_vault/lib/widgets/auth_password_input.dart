@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 
 class AuthPasswordInput extends StatefulWidget {
@@ -15,7 +16,7 @@ class _AuthPasswordInputState extends State<AuthPasswordInput> {
     return TextFormField(
       keyboardType: TextInputType.none,
       obscureText: passwordVisible,
-      cursorColor: const Color(0xffF0C029),
+      cursorColor: AppTheme.primary,
       decoration: InputDecorations.authInputDecoration(
           labelText: 'Contraseña',
           suffixIcon: IconButton(
