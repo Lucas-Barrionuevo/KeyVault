@@ -1,32 +1,32 @@
 ## EndPoints
-post->/auth/login/email->iniciar sesion email y pw
+post->/auth/login/email->login email y pw
 
-post->/auth/register/email->registrar email y pw
+post->/auth/register/email->register email y pw
 
-delete->/auth->borrar email y pw (enabled =true/false)
+delete->/auth->delete email y pw (enabled =true/false)
 
-put->/auth -> actualizar email y pw
+put->/auth -> update email y pw
 - - - 
-post->/category->crear categoria
+post->/category->create category
 
-delete->/category->borrar categoria
+delete->/category->delete category
 
-put->/category -> actualizar categoria
+put->/category -> update category
 
-get-> /category -> mostrar categoria
+get-> /category -> view category
 - - - 
-get -> /ui/icon -> dar iconos
+get -> /ui/icon -> view icon
 
-post -> /ui/icon -> guardar iconos
+post -> /ui/icon -> save icon
 
-put -> /ui/icon/id -> actualizar icono
+put -> /ui/icon/id -> update icon
 
-delete -> /ui/icon/id -> borrar icono
+delete -> /ui/icon/id -> delete icon
 - - - 
-get -> /ui/password -> mostrar password
+get -> /ui/password -> view pw
 
-post->/auth/password->guardar pw
+post->/auth/password->save pw
 
-delete->/auth/password->borrar pw (enabled =true/false)
+delete->/auth/password->delete pw (enabled =true/false)
 
-put->/auth/password-> actualizar pw
+put->/auth/password-> update pw
