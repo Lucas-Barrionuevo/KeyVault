@@ -11,24 +11,30 @@ get->/auth/me -> receive jwt and return user
 - - - 
 post->/category->create category
 
-delete->/category->delete category
+delete->/category/id->delete category
 
-put->/category -> update category
+put->/category/id -> update category
 
-get-> /category -> view category
+get-> /category -> view categorie
+
+get -> /category/id -> view categories
 - - - 
-get -> /ui/icon -> view icon
+get -> ui/icon/id -> view icons
+
+get -> /ui/icon/id -> view icon
 
 post -> /ui/icon -> save icon
 
-put -> /ui/icon -> update icon
+put -> /ui/icon/id -> update icon
 
-delete -> /ui/icon -> delete icon
+delete -> /ui/icon/id -> delete icon
 - - - 
-get -> /password -> view pw
+get -> /password/id -> view pw
+
+get -> /password - > view pws
 
 post->/password->save pw
 
-delete->/password->delete pw (enabled =true/false)
+delete->/password/id->delete pw (enabled =true/false)
 
-put->/password-> update pw
+put->/password/id-> update pw
