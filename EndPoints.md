@@ -15,11 +15,11 @@ delete->/category/id->delete category
 
 put->/category/id -> update category
 
-get-> /category -> view categorie
+get-> /category/id -> view category
 
-get -> /category/id -> view categories
+get -> /category-> view categories
 - - - 
-get -> ui/icon/id -> view icons
+get -> ui/icon -> view icons
 
 get -> /ui/icon/id -> view icon
 
