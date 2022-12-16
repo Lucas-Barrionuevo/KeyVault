@@ -10,8 +10,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "passwords")
 public class Password {
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -19,9 +21,7 @@ public class Password {
 	@Column(nullable = false)
 	private String content;
 	@Column(nullable = false)
-	private Date createdAt;
-	@Column(nullable = false)
-	private int seenqty;//number of times password seen
+	private String name;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name= "category_id")
 	private Category category;
@@ -29,10 +29,22 @@ public class Password {
 	@JoinColumn(name= "icon_id")
 	private Icon icon;
 	
+	private Date createdAt;
+	
+	private int seenqty;//number of times password seen
+	
 	private String url;
 
 	public Password() {
 		super();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getId() {

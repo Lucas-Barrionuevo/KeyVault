@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={
+		"com.example.something", "com.example.application"})
 public class KeyVaultApplication {
 	@Bean
 	public ModelMapper modelMapper() {

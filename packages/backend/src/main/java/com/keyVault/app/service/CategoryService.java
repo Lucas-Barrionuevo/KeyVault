@@ -5,12 +5,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.keyVault.app.dto.CategoryDTO;
 import com.keyVault.app.entity.Category;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
-
+@Service
 public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;

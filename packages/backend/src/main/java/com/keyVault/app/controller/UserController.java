@@ -20,7 +20,7 @@ public class UserController {
 		return ResponseEntity.ok("ok");
 	}
 	@PostMapping("/register")
-	public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO){
+	public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
 		return ResponseEntity.ok("ok");
 	}
 	@PutMapping

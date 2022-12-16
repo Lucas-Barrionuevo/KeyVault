@@ -1,4 +1,6 @@
 package com.keyVault.app.controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,27 +11,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.keyVault.app.dto.IconDTO;
+import com.keyVault.app.service.IconService;
+
+import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/ui/icon")
 public class IconController {
+	@Autowired
+	private IconService iconService;
+	
 	@GetMapping
 	public ResponseEntity<?> getIcons (){
-		return ResponseEntity.ok("ok");
+		return ResponseEntity.ok(iconService.findAllIcons());
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getIcon (@PathVariable(name = "id") long id){
-		return ResponseEntity.ok("ok");
+	public ResponseEntity<?> getIcon (@PathVariable(name = "id") int id){
+		return ResponseEntity.ok(iconService.findIconById(id));
 	}
 	@PostMapping
-	public ResponseEntity<?> createIcon(@RequestBody IconDTO icon){
-		return ResponseEntity.ok("ok");
+	public ResponseEntity<?> createIcon(@Valid @RequestBody IconDTO iconDTO){
+		return new ResponseEntity<>(iconService.createIcon(iconDTO),HttpStatus.CREATED);
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateIcon(@PathVariable(name = "id") long id,@RequestBody IconDTO icon){
-		return ResponseEntity.ok("ok");
+	public ResponseEntity<?> updateIcon(@PathVariable(name = "id") int id,@RequestBody IconDTO iconDTO){
+		return new ResponseEntity<>(iconService.updateIcon(iconDTO, id),HttpStatus.OK);
 	}
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteIcon(@PathVariable(name = "id") long id){
-		return ResponseEntity.ok("ok");
+	public ResponseEntity<?> deleteIcon(@PathVariable(name = "id") int id){
+		iconService.deleteIcon(id);
+		return new ResponseEntity<>("Icon removed successfully", HttpStatus.OK);
 	}
 }
