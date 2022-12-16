@@ -27,7 +27,7 @@ public class Category {
 	private String preview;
 	
 	@JsonBackReference
-	@OneToMany(mappedBy= "category" , cascade= CascadeType.ALL, orphanRemoval= true)
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Password> passwords = new HashSet<>();
 	
 	public Category() {

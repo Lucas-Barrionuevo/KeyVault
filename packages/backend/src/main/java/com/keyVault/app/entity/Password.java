@@ -2,6 +2,10 @@ package com.keyVault.app.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,7 +27,7 @@ public class Password {
 	@Column(nullable = false)
 	private String name;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name= "category_id")
+	@JoinColumn(name = "category_id")
 	private Category category;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name= "icon_id")

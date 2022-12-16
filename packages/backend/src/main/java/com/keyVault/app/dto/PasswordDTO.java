@@ -15,8 +15,11 @@ public class PasswordDTO {
 	private String name;
 	private Date createdAt;
 	private int seenqty;//number of times password seen
+	
 	private Category category;
+	
 	private Icon icon;
+	
 	private String url;
 	
 	public PasswordDTO() {
