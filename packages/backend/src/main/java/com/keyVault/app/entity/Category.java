@@ -20,10 +20,12 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private int id;
+	
 	@Column(nullable = false)
 	private String name;
 	
 	private String preview;
+	
 	@JsonBackReference
 	@OneToMany(mappedBy= "category" , cascade= CascadeType.ALL, orphanRemoval= true)
 	private Set<Password> passwords = new HashSet<>();

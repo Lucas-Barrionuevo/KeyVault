@@ -38,6 +38,7 @@ public class PasswordController {
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePassword(@PathVariable(name = "id") int id){
+		passwordService.deletePassword(id);
 		return new ResponseEntity<>("Password removed successfully", HttpStatus.OK);
 	}
 }

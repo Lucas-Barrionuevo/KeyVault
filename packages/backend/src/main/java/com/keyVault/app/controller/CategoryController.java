@@ -25,17 +25,13 @@ public class CategoryController {
 	public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
 		return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
 	}
-	/*@GetMapping("/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getCagory (@PathVariable(name = "id") int id){
 		return ResponseEntity.ok(categoryService.findCategoryById(id));
 	}
 	@GetMapping
 	public ResponseEntity<?> getCagories (){
 		return ResponseEntity.ok(categoryService.findAllCategories());
-	}
-	@PostMapping
-	public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
-		return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateCategory(@PathVariable(name = "id") int id, @Valid @RequestBody CategoryDTO categoryDTO){
@@ -45,5 +41,5 @@ public class CategoryController {
 	public ResponseEntity<?> deleteCategory(@PathVariable(name = "id") int id){
 		categoryService.deleteCategory(id);
 		return new ResponseEntity<>("Category removed successfully", HttpStatus.OK);
-	}*/
+	}
 }
