@@ -10,8 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {'login': (context) => const LoginScreen()},
-      initialRoute: 'login',
+      routes: {
+        'login': (context) => const LoginScreen(),
+        'home_screen': (context) => const HomeScreen(),
+      },
+      initialRoute: 'home_screen',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lighTheme,
     );
