@@ -6,16 +6,22 @@ post->/auth/register/email->register email y pw
 delete->/auth->delete email y pw (enabled =true/false)
 
 put->/auth -> update email y pw
+
+get->/auth/me -> receive jwt and return user
 - - - 
 post->/category->create category
 
-delete->/category->delete category
+delete->/category/id->delete category
 
-put->/category -> update category
+put->/category/id -> update category
 
-get-> /category -> view category
+get-> /category/id -> view category
+
+get -> /category-> view categories
 - - - 
-get -> /ui/icon -> view icon
+get -> ui/icon -> view icons
+
+get -> /ui/icon/id -> view icon
 
 post -> /ui/icon -> save icon
 
@@ -23,10 +29,12 @@ put -> /ui/icon/id -> update icon
 
 delete -> /ui/icon/id -> delete icon
 - - - 
-get -> /ui/password -> view pw
+get -> /password/id -> view pw
 
-post->/auth/password->save pw
+get -> /password - > view pws
 
-delete->/auth/password->delete pw (enabled =true/false)
+post->/password->save pw
 
-put->/auth/password-> update pw
+delete->/password/id->delete pw (enabled =true/false)
+
+put->/password/id-> update pw
