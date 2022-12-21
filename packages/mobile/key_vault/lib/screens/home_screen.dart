@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:key_vault/widgets/widgets.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: const BottomNav(),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
@@ -104,7 +107,7 @@ class _Header extends StatelessWidget {
     return HeaderContainer(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35),
+          padding: const EdgeInsets.only(right: 35, left: 35, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
