@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/utils/sizes.dart';
 
 import 'package:key_vault/widgets/widgets.dart';
 
@@ -7,17 +8,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Sizes(context);
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              _Header(),
+            children: [
+              const _Header(),
               SizedBox(
-                height: 35,
+                height: Sizes.scaleVertical * 4,
               ),
-              _PasswordList(),
+              const _PasswordList(),
             ],
           ),
         ));
@@ -37,10 +39,12 @@ class _PasswordList extends StatelessWidget {
         const ListTitle(text: "Recently Added"),
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+          padding: EdgeInsets.symmetric(
+              horizontal: Sizes.scaleHorizontal * 5,
+              vertical: Sizes.scaleVertical * 1.5),
           shrinkWrap: true,
-          separatorBuilder: (context, index) => const SizedBox(
-            height: 10,
+          separatorBuilder: (context, index) => SizedBox(
+            height: Sizes.scaleVertical,
           ),
           itemBuilder: (context, index) => const _PasswordItem(),
           itemCount: 10,
@@ -64,11 +68,11 @@ class _PasswordItem extends StatelessWidget {
       ),
       contentPadding: EdgeInsets.zero,
       subtitle: const Text("Added 2 min ago"),
-      leading: const CircleAvatar(
-        backgroundColor: Color(0xffF2F0E9),
+      leading: CircleAvatar(
+        backgroundColor: const Color(0xffF2F0E9),
         maxRadius: 35,
         child: Icon(
-          size: 35,
+          size: Sizes.scaleHorizontal * 10,
           Icons.reddit,
         ),
       ),
@@ -88,17 +92,20 @@ class _Header extends StatelessWidget {
     return HeaderContainer(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(right: 35, left: 35, bottom: 20),
+          padding: EdgeInsets.only(
+              right: Sizes.scaleHorizontal * 8,
+              left: Sizes.scaleHorizontal * 8,
+              bottom: Sizes.scaleVertical * 3),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const _Head(),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: Sizes.scaleVertical * 2,
               ),
               const _Title(),
-              const SizedBox(
-                height: 15,
+              SizedBox(
+                height: Sizes.scaleVertical * 3 / 2,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,15 +132,15 @@ class _Title extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text(
+      children: [
+        const Text(
           "Manage",
           style: TextStyle(fontSize: 18),
         ),
         SizedBox(
-          height: 5,
+          height: Sizes.scaleVertical / 2,
         ),
-        Text(
+        const Text(
           "Your Password",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
@@ -149,8 +156,8 @@ class _Head extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 10),
+    return Padding(
+      padding: EdgeInsets.only(top: Sizes.scaleVertical * 2),
       child: const CircleAvatar(
         child: Icon(Icons.access_alarm),
       ),
@@ -172,10 +179,12 @@ class CategoryHeaderCard extends StatelessWidget {
             BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.07), blurRadius: 20)
           ],
           borderRadius: BorderRadius.circular(30)),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      padding: EdgeInsets.symmetric(
+          horizontal: Sizes.scaleHorizontal * 3.5,
+          vertical: Sizes.scaleVertical * 2.3),
       child: Column(
-        children: const [
-          CircleAvatar(
+        children: [
+          const CircleAvatar(
             backgroundColor: Color(0xffFEF9EA),
             maxRadius: 28,
             child: Icon(
@@ -184,16 +193,16 @@ class CategoryHeaderCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: Sizes.scaleVertical * 1.2,
           ),
-          Text(
+          const Text(
             "CodeaIT",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
-          SizedBox(
+          const SizedBox(
             height: 2,
           ),
-          Text(
+          const Text(
             "34",
             style: TextStyle(fontSize: 16, color: Colors.black26),
           ),
