@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 
 class PasswordsScreen extends StatelessWidget {
@@ -8,6 +9,11 @@ class PasswordsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: AppTheme.primary,
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
           title: const Text("Password"),
           backgroundColor: Colors.white,
