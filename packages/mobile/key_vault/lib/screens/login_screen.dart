@@ -10,28 +10,29 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Column(
-        children: [
-          const AuthLogo(),
-          const _Title(),
-          const _Subtitle(),
-          const SizedBox(
-            height: 40,
+      child: SingleChildScrollView(
+        child: Expanded(
+          child: Column(
+            children: [
+              const AuthLogo(),
+              const _Title(),
+              const _Subtitle(),
+              const SizedBox(
+                height: 40,
+              ),
+              const _LoginForm(),
+              const SizedBox(
+                height: 25,
+              ),
+              const _ForgotMyPasswordButton(),
+              AuthTextAndButton(
+                onTap: () {},
+                text1: '¿No tienes una cuenta?',
+                text2: 'Registrate',
+              )
+            ],
           ),
-          const _LoginForm(),
-          const SizedBox(
-            height: 25,
-          ),
-          const _ForgotMyPasswordButton(),
-          Expanded(
-            child: Container(),
-          ),
-          AuthTextAndButton(
-            onTap: () {},
-            text1: '¿No tienes una cuenta?',
-            text2: 'Registrate',
-          )
-        ],
+        ),
       ),
     ));
   }
