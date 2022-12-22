@@ -35,7 +35,7 @@ class _PasswordList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _ListTitle(),
+        const ListTitle(text: "Recently Added"),
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
@@ -75,24 +75,6 @@ class _PasswordItem extends StatelessWidget {
       ),
       tileColor: Colors.white,
       onTap: () {},
-    );
-  }
-}
-
-class _ListTitle extends StatelessWidget {
-  const _ListTitle({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 35),
-      child: Text('Recently Added',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          )),
     );
   }
 }

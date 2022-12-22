@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/screens/passwords_screen.dart';
 import 'package:key_vault/screens/screens.dart';
 import 'package:key_vault/theme/app_theme.dart';
 
@@ -13,8 +14,9 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (context) => const LoginScreen(),
         'home_screen': (context) => const HomeScreen(),
+        'passwords_screen': (context) => const PasswordsScreen(),
       },
-      initialRoute: 'home_screen',
+      initialRoute: 'passwords_screen',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lighTheme,
     );
