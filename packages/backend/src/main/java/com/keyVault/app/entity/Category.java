@@ -2,9 +2,7 @@ package com.keyVault.app.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,9 +23,7 @@ public class Category {
 	private String name;
 	
 	private String preview;
-	
-	@JsonBackReference
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private Set<Password> passwords = new HashSet<>();
 	
 	public Category() {

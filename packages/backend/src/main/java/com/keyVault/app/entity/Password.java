@@ -1,5 +1,4 @@
 package com.keyVault.app.entity;
-
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
 @Entity
 @Table(name = "passwords")
 public class Password {
@@ -26,10 +24,11 @@ public class Password {
 	private String content;
 	@Column(nullable = false)
 	private String name;
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category category;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name= "icon_id")
 	private Icon icon;
 	

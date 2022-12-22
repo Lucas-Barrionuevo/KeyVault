@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.keyVault.app.dto.PasswordDTO;
 import com.keyVault.app.entity.Password;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
+import com.keyVault.app.repository.CategoryRepository;
+import com.keyVault.app.repository.IconRepository;
 import com.keyVault.app.repository.PasswordRepository;
 @Service
 public class PasswordService {
@@ -15,11 +17,23 @@ public class PasswordService {
 	private PasswordRepository passwordRepository;
 	
 	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private IconRepository iconRepository;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 	
 	public PasswordDTO createPassword (PasswordDTO passwordDTO) {
 		Password password = mappingEntity(passwordDTO);
 		password.setCreatedAt(new Date());
+		if(password.getCategory()!=null) {
+			password.setCategory(categoryRepository.findById(password.getCategory().getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", password.getCategory().getId())));
+		}
+		if (password.getIcon() != null) {
+			password.setIcon(iconRepository.findById(password.getIcon().getId()).orElseThrow(() -> new ResourceNotFoundException("Icon", "id", password.getIcon().getId())));
+		}
 		Password newPassword = passwordRepository.save(password);
 		
 		PasswordDTO responsePassword = mappingDTO(newPassword);
