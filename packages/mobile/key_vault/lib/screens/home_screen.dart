@@ -8,7 +8,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: const BottomNav(),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
