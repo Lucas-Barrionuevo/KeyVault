@@ -19,7 +19,8 @@ class AddPasswordScreen extends StatelessWidget {
     Sizes(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: AppTheme.primary,
@@ -63,11 +64,16 @@ class AddPasswordScreen extends StatelessWidget {
                   decoration: InputDecorations.formDecoration(
                       hintText: "https://facebook.com/", label: "URL")),
               SizedBox(height: Sizes.scaleVertical * 3),
+              TextFormField(
+                  cursorColor: AppTheme.primary,
+                  decoration: InputDecorations.formDecoration(
+                      hintText: "1234", label: "Contraseña")),
+              SizedBox(height: Sizes.scaleVertical * 3),
               AutocompleteInput(
                 label: "Categoría",
                 hintText: "Trabajo",
                 onSelected: (String selected) {},
-              )
+              ),
             ]),
           ),
         ),
