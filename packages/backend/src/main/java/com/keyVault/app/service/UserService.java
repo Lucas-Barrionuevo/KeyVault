@@ -15,7 +15,7 @@ public class UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public UserDTO registerCategory (UserDTO userDTO) {
+	public UserDTO registerUser (UserDTO userDTO) {
 		User user = mappingEntity(userDTO);
 		user.setCreatedAt(new Date());
 		user.setEnabled(true);

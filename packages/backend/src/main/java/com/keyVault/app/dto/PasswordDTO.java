@@ -13,6 +13,8 @@ public class PasswordDTO {
 	@NotEmpty
 	@Size(min=2, message = "The password name must have at least 2 characters")
 	private String name;
+	@Size(min=2, message = "The password name must have at least 2 characters")
+	private String userOrMail;
 	private Date createdAt;
 	private int seenqty;//number of times password seen
 	
@@ -88,6 +90,14 @@ public class PasswordDTO {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getUserOrMail() {
+		return userOrMail;
+	}
+
+	public void setUserOrMail(String userOrMail) {
+		this.userOrMail = userOrMail;
 	}
 
 }

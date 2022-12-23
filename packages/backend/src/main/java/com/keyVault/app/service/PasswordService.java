@@ -60,6 +60,7 @@ public class PasswordService {
 		password.setName(passwordDTO.getName());
 		password.setCategory(passwordDTO.getCategory());
 		password.setIcon(passwordDTO.getIcon());
+		password.setUserOrMail(passwordDTO.getUserOrMail());
 		
 		Password updatedPassword = passwordRepository.save(password);
 		return mappingDTO(updatedPassword);

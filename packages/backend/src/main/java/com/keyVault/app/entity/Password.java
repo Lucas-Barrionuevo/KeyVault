@@ -22,8 +22,10 @@ public class Password {
 	private int id;
 	@Column(nullable = false)
 	private String content;
-	@Column(nullable = false)
+	
 	private String name;
+	@Column(nullable = false)
+	private String userOrMail;
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
@@ -104,6 +106,14 @@ public class Password {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getUserOrMail() {
+		return userOrMail;
+	}
+
+	public void setUserOrMail(String userOrMail) {
+		this.userOrMail = userOrMail;
 	}
 	
 }
