@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/providers/password_form_provider.dart';
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/screens/screens.dart';
 import 'package:key_vault/theme/app_theme.dart';
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => BottomNavProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => BottomNavProvider()),
+        ChangeNotifierProvider(create: (_) => PasswordFormProvider())
+      ],
       child: MaterialApp(
         routes: {
           'login': (context) => const LoginScreen(),
