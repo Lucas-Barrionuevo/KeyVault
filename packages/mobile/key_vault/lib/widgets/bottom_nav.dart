@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({
@@ -18,7 +19,15 @@ class BottomNav extends StatelessWidget {
         currentIndex: currentIndex,
         showUnselectedLabels: false,
         selectedItemColor: AppTheme.primary,
-        onTap: (value) => bottomNavProvider.selectedMenuOpt = value,
+        onTap: (value) async {
+          if (value == 1) {
+            String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+                '#3D8BEF', 'Cancel', false, ScanMode.QR);
+            print(barcodeScanRes);
+          } else {
+            bottomNavProvider.selectedMenuOpt = value;
+          }
+        },
         iconSize: 28,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
