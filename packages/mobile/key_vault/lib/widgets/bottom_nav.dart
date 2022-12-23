@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/providers/password_form_provider.dart';
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,10 @@ class BottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final bottomNavProvider = Provider.of<BottomNavProvider>(context);
     final currentIndex = bottomNavProvider.selectedMenuOpt;
+    void navToNewPassword(url) {
+      Navigator.of(context).pushNamed('add_password_screen', arguments: url);
+    }
+
     return BottomNavigationBar(
         backgroundColor: Colors.white,
         showSelectedLabels: false,
@@ -21,9 +26,12 @@ class BottomNav extends StatelessWidget {
         selectedItemColor: AppTheme.primary,
         onTap: (value) async {
           if (value == 1) {
-            String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-                '#3D8BEF', 'Cancel', false, ScanMode.QR);
-            print(barcodeScanRes);
+            //String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+            //    '#3D8BEF', 'Cancel', false, ScanMode.QR);
+            //if (barcodeScanRes == -1) return;
+            String barcodeScanRes =
+                "https://github.com/Lucas-Barrionuevo/KeyVault";
+            navToNewPassword(barcodeScanRes);
           } else {
             bottomNavProvider.selectedMenuOpt = value;
           }
