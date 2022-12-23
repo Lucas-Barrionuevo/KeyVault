@@ -23,8 +23,6 @@ public class Category {
 	private String name;
 	
 	private String preview;
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-	private Set<Password> passwords = new HashSet<>();
 	
 	public Category() {
 		super();
@@ -47,11 +45,4 @@ public class Category {
 	public void setPreview(String preview) {
 		this.preview = preview;
 	}
-	public Set<Password> getPasswords() {
-		return passwords;
-	}
-	public void setPasswords(Set<Password> passwords) {
-		this.passwords = passwords;
-	}
-	
 }

@@ -15,8 +15,6 @@ public class CategoryDTO {
 	
 	private String preview;
 	
-	private Set<Password> passwords;
-	
 	public CategoryDTO() {
 		super();
 	}
