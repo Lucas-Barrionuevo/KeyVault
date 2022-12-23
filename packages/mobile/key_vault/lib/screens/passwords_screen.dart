@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
@@ -5,10 +6,14 @@ import 'package:key_vault/utils/sizes.dart';
 
 class PasswordsScreen extends StatelessWidget {
   const PasswordsScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     Sizes(context);
+    final appbarHeight = Platform.isAndroid
+        ? Size.fromHeight(Sizes.scaleVertical * 12)
+        : Size.fromHeight(Sizes.scaleVertical * 8);
+    final toolbarHeight =
+        Platform.isAndroid ? Sizes.scaleVertical * 12 : Sizes.scaleVertical * 8;
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
@@ -18,14 +23,21 @@ class PasswordsScreen extends StatelessWidget {
         backgroundColor: AppTheme.primary,
         child: const Icon(Icons.add),
       ),
-      appBar: AppBar(
-          title: const Text("Password"),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          elevation: 0,
-          toolbarHeight: Sizes.scaleVertical * 7.5,
-          titleTextStyle: const TextStyle(
-              color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold)),
+      appBar: PreferredSize(
+          preferredSize: appbarHeight,
+          child: AppBar(
+              title: const Text("Passwords"),
+              backgroundColor: Colors.white,
+              iconTheme: const IconThemeData(
+                color: Colors.black, //change your color here
+              ),
+              centerTitle: true,
+              elevation: 0,
+              toolbarHeight: toolbarHeight,
+              titleTextStyle: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold))),
       body: Column(
         children: const [
           _SearchBar(),

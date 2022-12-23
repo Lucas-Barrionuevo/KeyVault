@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/theme/app_theme.dart';
 
 class InputDecorations {
   static InputDecoration authInputDecoration(
@@ -24,5 +25,19 @@ class InputDecorations {
             fontSize: 18),
         hintText: "Search",
         fillColor: const Color(0xffF6F8F9));
+  }
+
+  static InputDecoration formDecoration(
+      {required String hintText, required String label}) {
+    return InputDecoration(
+        filled: false,
+        hintText: hintText,
+        label: Text(label),
+        focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppTheme.primary, width: 1),
+            borderRadius: BorderRadius.circular(10)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black26, width: 1),
+            borderRadius: BorderRadius.circular(10)));
   }
 }
