@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
         routes: {
           'login': (context) => const LoginScreen(),
           'main_bottom_nav_screen': (context) => const MainBottomNavScreen(),
+          'add_password_screen': (context) => const AddPasswordScreen()
         },
         initialRoute: 'main_bottom_nav_screen',
         debugShowCheckedModeBanner: false,
