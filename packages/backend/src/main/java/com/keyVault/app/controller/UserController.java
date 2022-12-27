@@ -15,7 +15,7 @@ import com.keyVault.app.service.UserService;
 
 import jakarta.validation.Valid;
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
