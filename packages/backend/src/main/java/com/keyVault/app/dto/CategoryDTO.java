@@ -37,11 +37,5 @@ public class CategoryDTO {
 	public void setPreview(String preview) {
 		this.preview = preview;
 	}
-	public Set<Password> getPasswords() {
-		return passwords;
-	}
-	public void setPasswords(Set<Password> passwords) {
-		this.passwords = passwords;
-	}
 	
 }
