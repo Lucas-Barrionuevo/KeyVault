@@ -1,0 +1,94 @@
+package com.keyVault.app.entity;
+
+import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
+public class Password {
+	@Id
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
+	private int id;
+	@Column(nullable = false)
+	private String content;
+	@Column(nullable = false)
+	private Date createdAt;
+	@Column(nullable = false)
+	private int seenqty;//number of times password seen
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name= "category_id")
+	private Category category;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name= "icon_id")
+	private Icon icon;
+	
+	private String url;
+
+	public Password() {
+		super();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public int getSeenqty() {
+		return seenqty;
+	}
+
+	public void setSeenqty(int seenqty) {
+		this.seenqty = seenqty;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Icon getIcon() {
+		return icon;
+	}
+
+	public void setIcon(Icon icon) {
+		this.icon = icon;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+}
