@@ -3,11 +3,12 @@ package com.keyVault.app.security;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.keyVault.app.entity.User;
 public class UserDetailsImpl implements UserDetails {
-	
+	@Autowired
 	private User user ;
 	
 	public UserDetailsImpl(User user) {

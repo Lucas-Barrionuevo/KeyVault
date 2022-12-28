@@ -30,7 +30,8 @@ public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilt
 		UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
 				authCredentials.getMail(), 
 				authCredentials.getPassword(),
-				Collections.emptyList());
+				Collections.emptyList()
+		);
 		return getAuthenticationManager().authenticate(usernamePAT);
 	}
 	
@@ -39,9 +40,9 @@ public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilt
 			Authentication authResult) throws java.io.IOException, ServletException {
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl)authResult.getPrincipal();
-		String token = TokenUtils.createToken(userDetails.getUsername(),userDetails.getPassword());
+		String token = TokenUtils.createToken(userDetails.getUsername(), userDetails.getPassword());
 		
-		response.addHeader("Authorization", "Beader" + token);
+		response.addHeader("Authorization", "Bearer " + token);
 		response.getWriter().flush();
 		super.successfulAuthentication(request, response, chain, authResult);
 	}

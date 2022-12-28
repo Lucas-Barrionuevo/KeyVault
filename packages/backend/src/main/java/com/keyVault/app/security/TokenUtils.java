@@ -39,10 +39,12 @@ public class TokenUtils {
 					.build()
 					.parseClaimsJws(token)
 					.getBody();
+			
 			String mail = claims.getSubject();
 			
 			return new UsernamePasswordAuthenticationToken(mail, null, Collections.emptyList());
 		} catch (JwtException e) {
+			System.out.println("aca");
 			return null;
 		}
 	}

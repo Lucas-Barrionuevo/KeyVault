@@ -1,6 +1,6 @@
 package com.keyVault.app.security;
 
-import org.hibernate.validator.internal.engine.constraintvalidation.PredefinedScopeConstraintValidatorManagerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,11 +15,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class WebSecurityConfig {
-	
+	@Autowired
 	private UserDetailsService userDetailsService;
+	@Autowired
 	private JWTAuthorizationFilter jwtAuthorizationFilter;
 
-	@SuppressWarnings("deprecation")
 	@Bean
 	SecurityFilterChain filterChan (HttpSecurity http, AuthenticationManager authManager) throws Exception {
 		JWTAtuthenticationFilter jwtAuthenticationFilter= new JWTAtuthenticationFilter();
@@ -40,7 +40,7 @@ public class WebSecurityConfig {
 				.build();
 	}
 	@Bean
-	AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+	AuthenticationManager authManager(HttpSecurity http) throws Exception {
 		return http.getSharedObject(AuthenticationManagerBuilder.class)
 				.userDetailsService(userDetailsService)
 				.passwordEncoder(passwordEncoder())
