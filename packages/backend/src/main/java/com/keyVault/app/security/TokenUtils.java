@@ -42,7 +42,6 @@ public class TokenUtils {
 			
 			return new UsernamePasswordAuthenticationToken(mail, null, Collections.emptyList());
 		} catch (JwtException e) {
-			System.out.println("aca");
 			return null;
 		}
 	}
