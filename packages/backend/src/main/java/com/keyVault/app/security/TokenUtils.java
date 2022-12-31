@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.data.repository.query.QueryLookupStrategy.Key;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import io.jsonwebtoken.Claims;
