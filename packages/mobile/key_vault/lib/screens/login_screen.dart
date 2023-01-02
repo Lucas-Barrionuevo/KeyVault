@@ -77,7 +77,9 @@ class _LoginForm extends StatelessWidget {
           const SizedBox(
             height: 25,
           ),
-          const AuthSubmitButton()
+          const SubmitButton(
+            title: "Iniciar sesión",
+          )
         ],
       )),
     );

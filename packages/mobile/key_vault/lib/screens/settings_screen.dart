@@ -50,7 +50,9 @@ class _SettingsForm extends StatelessWidget {
           SizedBox(height: Sizes.scaleVertical * 3),
           const AuthPasswordInput(),
           SizedBox(height: Sizes.scaleVertical * 3),
-          const AuthSubmitButton(),
+          const SubmitButton(
+            title: 'Guardar',
+          ),
           SizedBox(height: Sizes.scaleVertical * 5),
           TextButton(
             onPressed: () {},

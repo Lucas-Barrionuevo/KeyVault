@@ -37,7 +37,7 @@ class _PasswordList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ListTitle(text: "Recently Added"),
+        const ListTitle(text: "Agregadas recientemente"),
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(
@@ -68,7 +68,7 @@ class _PasswordItem extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       contentPadding: EdgeInsets.zero,
-      subtitle: const Text("Added 2 min ago"),
+      subtitle: const Text("Agregada hace 2 min."),
       leading: CircleAvatar(
         backgroundColor: const Color(0xffF2F0E9),
         maxRadius: 35,
@@ -135,14 +135,14 @@ class _Title extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Manage",
+          "Administra",
           style: TextStyle(fontSize: 18),
         ),
         SizedBox(
           height: Sizes.scaleVertical / 2,
         ),
         const Text(
-          "Your Password",
+          "Tus contraseñas",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ],

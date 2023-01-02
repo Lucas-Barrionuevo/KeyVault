@@ -35,7 +35,7 @@ class AddPasswordScreen extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: appbarHeight,
           child: AppBar(
-              title: const Text("Add Password"),
+              title: const Text("Agregar Contraseña"),
               backgroundColor: Colors.white,
               iconTheme: const IconThemeData(
                 color: Colors.black, //change your color here

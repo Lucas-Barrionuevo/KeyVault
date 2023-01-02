@@ -37,11 +37,10 @@ class BottomNav extends StatelessWidget {
         },
         iconSize: 28,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: 'QR'),
-          BottomNavigationBarItem(icon: Icon(Icons.key), label: 'Passwords'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
+          BottomNavigationBarItem(icon: Icon(Icons.key), label: 'Claves'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Ajustes'),
         ]);
   }
 }

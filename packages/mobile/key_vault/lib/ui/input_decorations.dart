@@ -23,7 +23,7 @@ class InputDecorations {
             color: Color(0xffA6AFB3),
             fontWeight: FontWeight.bold,
             fontSize: 18),
-        hintText: "Search",
+        hintText: "Buscar",
         fillColor: const Color(0xffF6F8F9));
   }
 
