@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:key_vault/providers/password_form_provider.dart';
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({
@@ -20,10 +18,11 @@ class BottomNav extends StatelessWidget {
 
     return BottomNavigationBar(
         backgroundColor: Colors.white,
-        showSelectedLabels: false,
+        showSelectedLabels: true,
         currentIndex: currentIndex,
         showUnselectedLabels: false,
         selectedItemColor: AppTheme.primary,
+        unselectedItemColor: Colors.black45,
         onTap: (value) async {
           if (value == 1) {
             //String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -40,7 +39,9 @@ class BottomNav extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: 'QR'),
-          BottomNavigationBarItem(icon: Icon(Icons.key), label: 'Passwords')
+          BottomNavigationBarItem(icon: Icon(Icons.key), label: 'Passwords'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Settings'),
         ]);
   }
 }

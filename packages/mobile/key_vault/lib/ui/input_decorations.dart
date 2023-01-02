@@ -28,7 +28,7 @@ class InputDecorations {
   }
 
   static InputDecoration formDecoration(
-      {required String hintText, required String label}) {
+      {String? hintText, required String label}) {
     return InputDecoration(
         filled: false,
         hintText: hintText,
