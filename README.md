@@ -5,3 +5,4 @@ This is a mobile app that solves a main problem on a daily basis, which always a
 
 ### Requirements
 This mobile app helps you to remember all of your passwords and credentials providing a simple user interface with basics interactions to, in a security way, get all of credentials. In addition with have in integrated qr scanner to avoid the task of type all of urls.
+test
