@@ -21,8 +21,8 @@ public class PasswordController {
 	private PasswordService passwordService;
 	
 	@GetMapping("/{user_id}")
-	public ResponseEntity<?> getPasswords (@PathVariable(name = "user_id") int user_id){
-		return ResponseEntity.ok(passwordService.findAllPasswords(user_id));
+	public ResponseEntity<?> getPasswordsForUSer (@PathVariable(name = "user_id") int user_id){
+		return ResponseEntity.ok(passwordService.findAllPasswordsForUser(user_id));
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPassword (@PathVariable(name = "id") int id){

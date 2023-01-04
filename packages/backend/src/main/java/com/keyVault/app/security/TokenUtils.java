@@ -37,9 +37,9 @@ public class TokenUtils {
 					.parseClaimsJws(token)
 					.getBody();
 			
-			String mail = claims.getSubject();
-			
-			return new UsernamePasswordAuthenticationToken(mail, null, Collections.emptyList());
+			String idString = claims.getSubject();
+			int id = Integer.parseInt(idString);
+			return new UsernamePasswordAuthenticationToken(id, null, Collections.emptyList());
 		} catch (JwtException e) {
 			return null;
 		}

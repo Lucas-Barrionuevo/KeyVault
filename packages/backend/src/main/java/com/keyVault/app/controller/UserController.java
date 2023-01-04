@@ -1,4 +1,6 @@
 package com.keyVault.app.controller;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +33,12 @@ public class UserController {
 	public ResponseEntity<?> getUser(@PathVariable(name = "id") int id){
 		return ResponseEntity.ok(userService.findUserById(id));
 	}
-	@PostMapping("/login")
+	/*@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO){
 		User user = userService.mappingEntity(userDTO);
 		String token =  tokenUtils.createToken(user.getId());
 		return ResponseEntity.ok(token);
-	}
+	}*/
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO userDTO){
 		if (userRepository.findOneByMail(userDTO.getMail())== null) {
@@ -46,10 +48,24 @@ public class UserController {
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateUser(@PathVariable (name="id")int id, @Valid @RequestBody UserDTO userDTO){
+		Optional<User> user = userRepository.findById(id);
+		if (user== null) {
+			return new ResponseEntity<>("the user with the entered id does not exist", HttpStatus.NOT_FOUND);
+		}
+		if (userDTO.getEnabled() == false) {
+			return new ResponseEntity<>("The account does not exist", HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<>(userService.updateUser(userDTO, id),HttpStatus.OK);
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable (name="id")int id){
+		Optional<User> user = userRepository.findById(id);
+		if (user ==null) {
+			return new ResponseEntity<>("the user with the entered id does not exist", HttpStatus.NOT_FOUND);
+		}
+		if (user.get().getEnabled() == false) {
+			return new ResponseEntity<>("The account does not exist", HttpStatus.BAD_REQUEST);
+		}
 		userService.deleteUser(id);
 		return new ResponseEntity<>("User removed successfully", HttpStatus.OK);
 	}

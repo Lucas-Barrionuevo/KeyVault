@@ -40,7 +40,7 @@ public class PasswordService {
 		return responsePassword;
 	}
 	
-	public List<PasswordDTO> findAllPasswords(int user_id){
+	public List<PasswordDTO> findAllPasswordsForUser(int user_id){
 		List<Password> AllPasswords = passwordRepository.findByUser_id(user_id);
 		List<PasswordDTO> AllResponsePasswords = AllPasswords.stream().map(password -> mappingDTO(password)).collect(Collectors.toList());
 		return AllResponsePasswords;

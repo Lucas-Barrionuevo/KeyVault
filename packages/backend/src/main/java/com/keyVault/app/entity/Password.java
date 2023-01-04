@@ -33,7 +33,6 @@ public class Password {
 	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name= "icon_id")
 	private Icon icon;
-	
 	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name= "user_id")
 	private User user;

@@ -25,7 +25,7 @@ public class WebSecurityConfig {
 	SecurityFilterChain filterChan (HttpSecurity http, AuthenticationManager authManager) throws Exception {
 		JWTAtuthenticationFilter jwtAuthenticationFilter= new JWTAtuthenticationFilter();
 		jwtAuthenticationFilter.setAuthenticationManager(authManager);
-		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+		jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");
 		
 		return http
 				.csrf().disable()

@@ -50,7 +50,7 @@ public class User {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	public boolean isEnabled() {
+	public boolean getEnabled() {
 		return enabled;
 	}
 	public void setEnabled(boolean enabled) {
