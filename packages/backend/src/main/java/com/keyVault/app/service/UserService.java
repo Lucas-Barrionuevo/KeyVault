@@ -2,6 +2,7 @@ package com.keyVault.app.service;
 import java.util.Date;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.keyVault.app.dto.UserDTO;
 import com.keyVault.app.entity.User;
@@ -11,12 +12,14 @@ import com.keyVault.app.repository.UserRepository;
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
-	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private ModelMapper modelMapper;
 	
 	public UserDTO registerUser (UserDTO userDTO) {
 		User user = mappingEntity(userDTO);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setCreatedAt(new Date());
 		user.setEnabled(true);
 		User newUser = userRepository.save(user);

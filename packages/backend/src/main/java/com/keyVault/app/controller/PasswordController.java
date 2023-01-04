@@ -20,9 +20,9 @@ public class PasswordController {
 	@Autowired
 	private PasswordService passwordService;
 	
-	@GetMapping
-	public ResponseEntity<?> getPasswords (){
-		return ResponseEntity.ok(passwordService.findAllPasswords());
+	@GetMapping("/{user_id}")
+	public ResponseEntity<?> getPasswords (@PathVariable(name = "user_id") int user_id){
+		return ResponseEntity.ok(passwordService.findAllPasswords(user_id));
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPassword (@PathVariable(name = "id") int id){

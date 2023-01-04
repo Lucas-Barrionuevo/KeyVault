@@ -34,6 +34,10 @@ public class Password {
 	@JoinColumn(name= "icon_id")
 	private Icon icon;
 	
+	@ManyToOne(fetch = FetchType.LAZY )
+	@JoinColumn(name= "user_id")
+	private User user;
+	
 	private Date createdAt;
 	
 	private int seenqty;//number of times password seen
@@ -42,6 +46,14 @@ public class Password {
 
 	public Password() {
 		super();
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getName() {

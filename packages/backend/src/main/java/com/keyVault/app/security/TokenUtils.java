@@ -15,15 +15,14 @@ public class TokenUtils {
 	private final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
 	private final static long ACCESS_TOKEN_VALIDITY_SECONDS = 2_592_000L;
 	
-	public static String createToken(String name, String mail) {
+	public static String createToken(int id) {
 		long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
 		Date expirationDate = new Date(System.currentTimeMillis()* expirationTime);
 		
 		Map<String, Object> extra = new HashMap<>();
-		extra.put("name", name);
+		extra.put("id", id);
 		
 		return Jwts.builder()
-				.setSubject(mail)
 				.setExpiration(expirationDate)
 				.addClaims(extra)
 				.signWith(Keys.hmacShaKeyFor(ACCESS_TOKEN_SECRET.getBytes()))
