@@ -28,11 +28,12 @@ class InputDecorations {
   }
 
   static InputDecoration formDecoration(
-      {String? hintText, required String label}) {
+      {String? hintText, Widget? suffixIcon, required String label}) {
     return InputDecoration(
         filled: false,
         hintText: hintText,
         label: Text(label),
+        suffixIcon: suffixIcon,
         errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 1),
             borderRadius: BorderRadius.circular(10)),

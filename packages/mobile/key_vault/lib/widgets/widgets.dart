@@ -1,3 +1,4 @@
+export 'package:key_vault/widgets/password_input.dart';
 export 'package:key_vault/widgets/autocomplete_input.dart';
 export 'package:key_vault/widgets/list_title.dart';
 export 'package:key_vault/widgets/bottom_nav.dart';

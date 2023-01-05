@@ -48,7 +48,7 @@ class _SettingsForm extends StatelessWidget {
               onChanged: (value) => settingsForm.email = value,
               decoration: InputDecorations.formDecoration(label: "Email")),
           SizedBox(height: Sizes.scaleVertical * 3),
-          const AuthPasswordInput(),
+          const PasswordInput(),
           SizedBox(height: Sizes.scaleVertical * 3),
           const SubmitButton(
             title: 'Guardar',
@@ -56,12 +56,12 @@ class _SettingsForm extends StatelessWidget {
           SizedBox(height: Sizes.scaleVertical * 5),
           TextButton(
             onPressed: () {},
-            child: Text("Cerrar sesión"),
+            child: const Text("Cerrar sesión"),
           ),
           SizedBox(height: Sizes.scaleVertical),
           TextButton(
             onPressed: () {},
-            child: Text("Eliminar cuenta"),
+            child: const Text("Eliminar cuenta"),
           )
         ]),
       ),
