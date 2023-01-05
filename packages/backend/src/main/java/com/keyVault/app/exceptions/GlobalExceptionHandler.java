@@ -15,36 +15,51 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.keyVault.app.dto.ErrorDetails;
 
-/*@ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
+@ControllerAdvice
+public class GlobalExceptionHandler  {
 
 	@ExceptionHandler(ResourceNotFoundException.class)
-	public ResponseEntity<ErrorDetails> HandlerResourceNotFoundException(ResourceNotFoundException exception,WebRequest webRequest){
+	public ResponseEntity<ErrorDetails> manejarResourceNotFoundException(ResourceNotFoundException exception,WebRequest webRequest){
 		ErrorDetails errorDetails = new ErrorDetails(new Date(),exception.getMessage(), webRequest.getDescription(false));
 		return new ResponseEntity<>(errorDetails,HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(KeyVaultAppException.class)
-	public ResponseEntity<ErrorDetails> HandlerKeyVaultAppException(KeyVaultAppException exception,WebRequest webRequest){
+	public ResponseEntity<ErrorDetails> manejarBlogAppException(KeyVaultAppException exception,WebRequest webRequest){
 		ErrorDetails errorDetails = new ErrorDetails(new Date(),exception.getMessage(), webRequest.getDescription(false));
 		return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorDetails> HandlerGlobalException(Exception exception,WebRequest webRequest){
+	public ResponseEntity<ErrorDetails> manejarGlobalException(Exception exception,WebRequest webRequest){
 		ErrorDetails errorDetails = new ErrorDetails(new Date(),exception.getMessage(), webRequest.getDescription(false));
 		return new ResponseEntity<>(errorDetails,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		Map<String, String> mistakes = new HashMap<>();
+		Map<String, String> errors = new HashMap<>();
 		ex.getBindingResult().getAllErrors().forEach((error) -> {
 			String fieldName = ((FieldError)error).getField();
 			String message = error.getDefaultMessage();
-			mistakes.put(fieldName, message);
+			
+			errors.put(fieldName, message);
 		});
-		return new ResponseEntity<>(mistakes,HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
 	}
 }
-*/
+/*@RestControllerAdvice
+public class ValidController {
+	
+	public Map<String, String>handleValidateExceptions(MethodArgumentNotValidException ex){
+		Map<String, String> errors = new HashMap<String, String>();
+		ex.getBindingResult().getAllErrors().forEach((error)-> {
+			String fieldName = ((FieldError) error).getField();
+			String message = error.getDefaultMessage();
+			
+			errors.put(fieldName, message);
+		});
+		return errors;
+	}
+}*/
+
