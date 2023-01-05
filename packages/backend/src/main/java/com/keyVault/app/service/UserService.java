@@ -36,7 +36,7 @@ public class UserService {
 	public UserDTO updateUser(UserDTO userDTO, int id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 		
-		user.setMail(userDTO.getMail());
+		user.setEmail(userDTO.getEmail());
 		user.setPassword(userDTO.getPassword());
 		
 		User updatedUser =userRepository.save(user);

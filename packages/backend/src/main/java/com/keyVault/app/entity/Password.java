@@ -22,7 +22,7 @@ public class Password {
 	private int id;
 	@Column(nullable = false)
 	private String content;
-	
+	@Column(nullable= false)
 	private String name;
 	@Column(nullable = false)
 	private String userOrMail;

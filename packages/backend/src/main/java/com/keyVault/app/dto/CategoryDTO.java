@@ -11,6 +11,7 @@ public class CategoryDTO {
 	
 	@NotEmpty
 	@Size(min=2, message = "The category name must have at least 2 characters")
+	@Size(max=30, message = "The category name must be less than 30 characters")
 	private String name;
 	
 	private String preview;

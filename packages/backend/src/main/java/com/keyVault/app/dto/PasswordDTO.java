@@ -9,11 +9,14 @@ public class PasswordDTO {
 	private int id;
 	@NotEmpty
 	@Size(min=2, message = "The password content must have at least 2 characters")
+	@Size(max=30, message = "The password content must be less than 30 characters")
 	private String content;
 	@NotEmpty
 	@Size(min=2, message = "The password name must have at least 2 characters")
+	@Size(max=30, message = "The name must be less than 30 characters")
 	private String name;
 	@Size(min=2, message = "The password name must have at least 2 characters")
+	@Size(max=30, message = "The user or mail must be less than 30 characters")
 	private String userOrMail;
 	private Date createdAt;
 	private int seenqty;//number of times password seen

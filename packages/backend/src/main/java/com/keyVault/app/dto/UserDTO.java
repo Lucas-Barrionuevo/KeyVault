@@ -7,11 +7,11 @@ import jakarta.validation.constraints.Size;
 public class UserDTO {
 	private int id;
 	@NotEmpty
-	@Size(min=2, message = "The mail have at least 2 characters")
-	@Email
-	private String mail;
+	@Email(message= "The email entered is invalid")
+	private String email;
 	@NotEmpty
 	@Size(min=2, message = "The password must have at least 2 characters")
+	@Size(max=30, message = "The password must be less than 30 characters")
 	private String password;
 	private Date createdAt;
 	private boolean enabled;
@@ -26,11 +26,11 @@ public class UserDTO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;

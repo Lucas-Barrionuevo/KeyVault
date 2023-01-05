@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.hibernate.boot.model.source.internal.hbm.AbstractSingularAttributeSourceEmbeddedImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import io.jsonwebtoken.Claims;
@@ -18,9 +20,9 @@ public class TokenUtils {
 	public static String createToken(int id) {
 		long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
 		Date expirationDate = new Date(System.currentTimeMillis()* expirationTime);
-		
+		System.out.println(id);
 		Map<String, Object> extra = new HashMap<>();
-		extra.put("id", id);
+		extra.put("id", String.valueOf(id));
 		
 		return Jwts.builder()
 				.setExpiration(expirationDate)
@@ -37,8 +39,7 @@ public class TokenUtils {
 					.parseClaimsJws(token)
 					.getBody();
 			
-			String idString = claims.getSubject();
-			int id = Integer.parseInt(idString);
+			String id = claims.getSubject();
 			return new UsernamePasswordAuthenticationToken(id, null, Collections.emptyList());
 		} catch (JwtException e) {
 			return null;

@@ -16,10 +16,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String mail) {
+	public UserDetails loadUserByUsername(String email) {
 		User user = userRepository
-		.findOneByMail(mail)
-		.orElseThrow(()-> new KeyVaultAppException(HttpStatus.NOT_FOUND ,"The user with mail" + mail + "does not exist"));
+		.findOneByEmail(email)
+		.orElseThrow(()-> new KeyVaultAppException(HttpStatus.NOT_FOUND ,"The user with mail" + email + "does not exist"));
 		
 		return new UserDetailsImpl(user);
 	}

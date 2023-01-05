@@ -16,7 +16,7 @@ public class User {
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private int id;
 	@Column(nullable = false)
-	private String mail;
+	private String email;
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
@@ -32,11 +32,11 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;

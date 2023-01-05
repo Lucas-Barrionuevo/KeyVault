@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.keyVault.app.dto.ErrorDetails;
 
-@ControllerAdvice
+/*@ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@ExceptionHandler(ResourceNotFoundException.class)
@@ -35,7 +35,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		ErrorDetails errorDetails = new ErrorDetails(new Date(),exception.getMessage(), webRequest.getDescription(false));
 		return new ResponseEntity<>(errorDetails,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
 
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -43,10 +42,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		ex.getBindingResult().getAllErrors().forEach((error) -> {
 			String fieldName = ((FieldError)error).getField();
 			String message = error.getDefaultMessage();
-			
 			mistakes.put(fieldName, message);
 		});
-		
 		return new ResponseEntity<>(mistakes,HttpStatus.BAD_REQUEST);
 	}
 }
+*/

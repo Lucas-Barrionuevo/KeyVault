@@ -33,15 +33,10 @@ public class UserController {
 	public ResponseEntity<?> getUser(@PathVariable(name = "id") int id){
 		return ResponseEntity.ok(userService.findUserById(id));
 	}
-	/*@PostMapping("/login")
-	public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO){
-		User user = userService.mappingEntity(userDTO);
-		String token =  tokenUtils.createToken(user.getId());
-		return ResponseEntity.ok(token);
-	}*/
+	
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO userDTO){
-		if (userRepository.findOneByMail(userDTO.getMail())== null) {
+		if (userRepository.findOneByEmail(userDTO.getEmail())== null) {
 			return new ResponseEntity<>("The email entered is already in use", HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(userService.registerUser(userDTO),HttpStatus.CREATED);
