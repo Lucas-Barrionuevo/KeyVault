@@ -47,38 +47,10 @@ class _PasswordList extends StatelessWidget {
           separatorBuilder: (context, index) => SizedBox(
             height: Sizes.scaleVertical,
           ),
-          itemBuilder: (context, index) => const _PasswordItem(),
+          itemBuilder: (context, index) => const PasswordListItem(),
           itemCount: 10,
         )
       ],
-    );
-  }
-}
-
-class _PasswordItem extends StatelessWidget {
-  const _PasswordItem({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: const Text(
-        "Probando",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      contentPadding: EdgeInsets.zero,
-      subtitle: const Text("Agregada hace 2 min."),
-      leading: CircleAvatar(
-        backgroundColor: const Color(0xffF2F0E9),
-        maxRadius: 35,
-        child: Icon(
-          size: Sizes.scaleHorizontal * 10,
-          Icons.reddit,
-        ),
-      ),
-      tileColor: Colors.white,
-      onTap: () {},
     );
   }
 }
