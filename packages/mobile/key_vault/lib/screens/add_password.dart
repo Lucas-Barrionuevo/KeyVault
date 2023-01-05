@@ -35,7 +35,7 @@ class AddPasswordScreen extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: appbarHeight,
           child: AppBar(
-              title: const Text("Add Password"),
+              title: const Text("Agregar Contraseña"),
               backgroundColor: Colors.white,
               iconTheme: const IconThemeData(
                 color: Colors.black, //change your color here
@@ -69,6 +69,8 @@ class _PasswordForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? initialUrl =
+        ModalRoute.of(context)?.settings?.arguments as String?;
     return Form(
       key: passwordForm.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -93,6 +95,7 @@ class _PasswordForm extends StatelessWidget {
             autocorrect: false,
             cursorColor: AppTheme.primary,
             onChanged: (value) => passwordForm.url = value,
+            initialValue: initialUrl,
             validator: (value) => PasswordValidations.url(value),
             decoration: InputDecorations.formDecoration(
                 hintText: "https://facebook.com/", label: "URL")),

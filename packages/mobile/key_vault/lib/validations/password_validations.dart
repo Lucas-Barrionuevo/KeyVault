@@ -9,6 +9,9 @@ class PasswordValidations {
     if (value != null && value.length > nameMaxLength) {
       return "Máximo $nameMaxLength caracteres";
     }
+    if (value == "") {
+      return "El nombre es requerido";
+    }
     return null;
   }
 

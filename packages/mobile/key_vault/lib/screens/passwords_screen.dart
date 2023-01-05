@@ -26,7 +26,7 @@ class PasswordsScreen extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: appbarHeight,
           child: AppBar(
-              title: const Text("Passwords"),
+              title: const Text("Contraseñas"),
               backgroundColor: Colors.white,
               iconTheme: const IconThemeData(
                 color: Colors.black, //change your color here

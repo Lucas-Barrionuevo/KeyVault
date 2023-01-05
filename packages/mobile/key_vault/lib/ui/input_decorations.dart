@@ -23,16 +23,17 @@ class InputDecorations {
             color: Color(0xffA6AFB3),
             fontWeight: FontWeight.bold,
             fontSize: 18),
-        hintText: "Search",
+        hintText: "Buscar",
         fillColor: const Color(0xffF6F8F9));
   }
 
   static InputDecoration formDecoration(
-      {required String hintText, required String label}) {
+      {String? hintText, Widget? suffixIcon, required String label}) {
     return InputDecoration(
         filled: false,
         hintText: hintText,
         label: Text(label),
+        suffixIcon: suffixIcon,
         errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 1),
             borderRadius: BorderRadius.circular(10)),

@@ -15,13 +15,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => BottomNavProvider()),
-        ChangeNotifierProvider(create: (_) => PasswordFormProvider())
+        ChangeNotifierProvider(create: (_) => PasswordFormProvider()),
+        ChangeNotifierProvider(create: (_) => SettingsFormProvider()),
       ],
       child: MaterialApp(
         routes: {
           'login': (context) => const LoginScreen(),
           'main_bottom_nav_screen': (context) => const MainBottomNavScreen(),
-          'add_password_screen': (context) => const AddPasswordScreen()
+          'add_password_screen': (context) => const AddPasswordScreen(),
         },
         initialRoute: 'main_bottom_nav_screen',
         debugShowCheckedModeBanner: false,
