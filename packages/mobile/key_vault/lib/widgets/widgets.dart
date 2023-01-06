@@ -1,3 +1,6 @@
+export 'package:key_vault/widgets/category_chip.dart';
+export 'package:key_vault/widgets/auth_subtitle.dart';
+export 'package:key_vault/widgets/auth_title.dart';
 export 'package:key_vault/widgets/bottom_sheet_modal.dart';
 export 'package:key_vault/widgets/password_list_item.dart';
 export 'package:key_vault/widgets/password_input.dart';

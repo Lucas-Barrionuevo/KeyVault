@@ -23,7 +23,7 @@ class AddPasswordScreen extends StatelessWidget {
     Sizes(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -47,12 +47,16 @@ class AddPasswordScreen extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 25,
                   fontWeight: FontWeight.bold))),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: Sizes.scaleHorizontal * 5,
-              vertical: Sizes.scaleVertical),
-          child: _PasswordForm(passwordForm: passwordForm),
+      body: Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: Sizes.scaleHorizontal * 5,
+                vertical: Sizes.scaleVertical),
+            child: _PasswordForm(passwordForm: passwordForm),
+          ),
         ),
       ),
     );
@@ -73,7 +77,7 @@ class _PasswordForm extends StatelessWidget {
         ModalRoute.of(context)?.settings?.arguments as String?;
     return Form(
       key: passwordForm.formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: AutovalidateMode.disabled,
       child: Column(children: [
         TextFormField(
             autocorrect: false,
@@ -82,6 +86,14 @@ class _PasswordForm extends StatelessWidget {
             validator: (value) => PasswordValidations.name(value),
             decoration: InputDecorations.formDecoration(
                 hintText: "Facebook", label: "Nombre")),
+        SizedBox(height: Sizes.scaleVertical * 3),
+        AutocompleteInput(
+          label: "Categoría",
+          hintText: "Trabajo",
+          onSelected: (String selected) {
+            passwordForm.category = selected;
+          },
+        ),
         SizedBox(height: Sizes.scaleVertical * 3),
         TextFormField(
             autocorrect: false,
@@ -108,13 +120,6 @@ class _PasswordForm extends StatelessWidget {
             decoration: InputDecorations.formDecoration(
                 hintText: "1234", label: "Contraseña")),
         SizedBox(height: Sizes.scaleVertical * 3),
-        AutocompleteInput(
-          label: "Categoría",
-          hintText: "Trabajo",
-          onSelected: (String selected) {
-            passwordForm.category = selected;
-          },
-        ),
       ]),
     );
   }

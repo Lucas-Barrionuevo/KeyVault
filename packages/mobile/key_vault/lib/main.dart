@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         routes: {
           'login': (context) => const LoginScreen(),
+          'register': (context) => const RegisterScreen(),
           'main_bottom_nav_screen': (context) => const MainBottomNavScreen(),
           'add_password_screen': (context) => const AddPasswordScreen(),
         },

@@ -13,6 +13,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Sizes(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
           child: Column(
         children: [_Header(), _SettingsForm()],

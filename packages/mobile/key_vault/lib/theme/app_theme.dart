@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static const Color primary = Color(0xffF0C029);
   static final ThemeData lighTheme = ThemeData.light().copyWith(
+      canvasColor: Colors.white,
       primaryColor: primary,
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(

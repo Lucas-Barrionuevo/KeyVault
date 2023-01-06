@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 import 'package:key_vault/utils/sizes.dart';
+import 'package:key_vault/widgets/widgets.dart';
 
 class PasswordsScreen extends StatelessWidget {
   const PasswordsScreen({Key? key}) : super(key: key);
@@ -39,8 +40,37 @@ class PasswordsScreen extends StatelessWidget {
                   fontSize: 25,
                   fontWeight: FontWeight.bold))),
       body: Column(
-        children: const [
-          _SearchBar(),
+        children: [
+          const _SearchBar(),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(
+                horizontal: Sizes.scaleHorizontal * 5,
+                vertical: Sizes.scaleVertical),
+            child: Row(
+              children: const [
+                CategoryChip(
+                  selected: true,
+                ),
+                CategoryChip(
+                  selected: false,
+                ),
+                CategoryChip(
+                  selected: false,
+                ),
+                CategoryChip(
+                  selected: false,
+                ),
+                CategoryChip(
+                  selected: false,
+                ),
+                CategoryChip(
+                  selected: false,
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
