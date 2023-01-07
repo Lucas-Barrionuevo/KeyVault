@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.keyVault.app.dto.PasswordDTO;
 import com.keyVault.app.dto.PasswordResponse;
+import com.keyVault.app.dto.PasswordResponse2;
 import com.keyVault.app.entity.Password;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
@@ -30,30 +31,29 @@ public class PasswordService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public PasswordDTO createPassword (PasswordDTO passwordDTO) {
+	public PasswordResponse2 createPassword (PasswordDTO passwordDTO) {
 		Password password = mappingEntity(passwordDTO);
 		password.setCreatedAt(new Date());
 		if(password.getCategory()!=null) {
-			System.out.println("aca3");
 			password.setCategory(categoryRepository.findById(password.getCategory().getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", password.getCategory().getId())));
 		}
 		if (password.getIcon() != null) {
-			System.out.println("aca2");
 			password.setIcon(iconRepository.findById(password.getIcon().getId()).orElseThrow(() -> new ResourceNotFoundException("Icon", "id", password.getIcon().getId())));
 		}
 		if(password.getUser()== null) {
-			System.out.println("aca1");
 			password.setUser(userRepository.findById(password.getUser().getId()).orElseThrow(()-> new ResourceNotFoundException("User", "id",password.getUser().getId() )));
 		}
 		Password newPassword = passwordRepository.save(password);
 		
-		PasswordDTO responsePassword = mappingDTO(newPassword);
-		return responsePassword;
+		PasswordDTO PasswordDTO = mappingDTO(newPassword);
+		PasswordResponse2 passwordResponse = mappingResponse2(PasswordDTO);
+		return passwordResponse;
 	}
 	
-	public List<PasswordDTO> findAllPasswordsForUser(int user_id){
+	public List<PasswordResponse2> findAllPasswordsForUser(int user_id){
 		List<Password> AllPasswords = passwordRepository.findByUser_id(user_id);
-		List<PasswordDTO> AllResponsePasswords = AllPasswords.stream().map(password -> mappingDTO(password)).collect(Collectors.toList());
+		List<PasswordDTO> AllPasswordsDTO = AllPasswords.stream().map(password -> mappingDTO(password)).collect(Collectors.toList());
+		List<PasswordResponse2> AllResponsePasswords = AllPasswordsDTO.stream().map(passwordDTO -> mappingResponse2(passwordDTO)).collect(Collectors.toList());
 		return AllResponsePasswords;
 	}
 	
@@ -63,7 +63,7 @@ public class PasswordService {
 		return mappingResponse(mappingDTO(password));
 	}
 	
-	public PasswordDTO updatePassword(PasswordDTO passwordDTO, int id) {
+	public PasswordResponse updatePassword(PasswordDTO passwordDTO, int id) {
 		Password password = passwordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Password", "id", id));
 		
 		password.setContent(passwordDTO.getContent());
@@ -74,17 +74,29 @@ public class PasswordService {
 		password.setUserOrMail(passwordDTO.getUserOrMail());
 		
 		Password updatedPassword = passwordRepository.save(password);
-		return mappingDTO(updatedPassword);
+		return mappingResponse(mappingDTO(updatedPassword));
 	}
 	
 	public void deletePassword(int id) {
 		Password password = passwordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Password", "id", id));
 		passwordRepository.delete(password);
 	}
+	public PasswordResponse2 mappingResponse2 (PasswordDTO passwordDTO) {
+		PasswordResponse2 passwordResponse2 = new PasswordResponse2();
+		passwordResponse2.setCategory(passwordDTO.getCategory());
+		passwordResponse2.setCreatedAt(passwordDTO.getCreatedAt());
+		passwordResponse2.setIcon(passwordDTO.getIcon());
+		passwordResponse2.setId(passwordDTO.getId());
+		passwordResponse2.setName(passwordDTO.getName());
+		passwordResponse2.setSeenqty(passwordDTO.getSeenqty());
+		passwordResponse2.setUrl(passwordDTO.getUrl());
+		passwordResponse2.setUserOrMail(passwordDTO.getUserOrMail());
+		return passwordResponse2;
+	}
 	public PasswordResponse mappingResponse (PasswordDTO passwordDTO) {
 		PasswordResponse passwordResponse = new PasswordResponse();
-		passwordResponse.setCategory(passwordDTO.getCategory());
 		passwordResponse.setContent(passwordDTO.getContent());
+		passwordResponse.setCategory(passwordDTO.getCategory());
 		passwordResponse.setCreatedAt(passwordDTO.getCreatedAt());
 		passwordResponse.setIcon(passwordDTO.getIcon());
 		passwordResponse.setId(passwordDTO.getId());

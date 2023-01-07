@@ -4,10 +4,10 @@ import java.util.Date;
 
 import com.keyVault.app.entity.Category;
 import com.keyVault.app.entity.Icon;
-public class PasswordResponse {
+
+public class PasswordResponse2 {
 	private int id;
 	private String name;
-	private String content;
 	private String userOrMail;
 	private Date createdAt;
 	private int seenqty;//number of times password seen
@@ -18,7 +18,7 @@ public class PasswordResponse {
 	
 	private String url;
 	
-	public PasswordResponse() {
+	public PasswordResponse2() {
 		super();
 	}
 
@@ -84,14 +84,6 @@ public class PasswordResponse {
 
 	public void setUserOrMail(String userOrMail) {
 		this.userOrMail = userOrMail;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 
 }
