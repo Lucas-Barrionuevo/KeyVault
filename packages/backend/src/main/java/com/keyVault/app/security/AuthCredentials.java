@@ -1,22 +1,22 @@
 package com.keyVault.app.security;
 
 public class AuthCredentials {
-	private String mail;
+	private String email;
 	private String Password;
 	
 	public AuthCredentials() {
 		super();
 	}
-	public AuthCredentials(String mail, String password) {
+	public AuthCredentials(String email, String password) {
 		super();
-		this.mail = mail;
+		this.email = email;
 		Password = password;
 	}
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return Password;

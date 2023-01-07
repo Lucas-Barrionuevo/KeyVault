@@ -1,56 +1,25 @@
-package com.keyVault.app.entity;
+package com.keyVault.app.dto;
+
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-@Entity
-@Table(name = "passwords")
-public class Password {
-	@Id
-	@GeneratedValue(strategy =  GenerationType.IDENTITY)
+import com.keyVault.app.entity.Category;
+import com.keyVault.app.entity.Icon;
+public class PasswordResponse {
 	private int id;
-	@Column(nullable = false)
 	private String content;
-	@Column(nullable= false)
 	private String name;
-	@Column(nullable = false)
 	private String userOrMail;
-	@JsonProperty(access = Access.WRITE_ONLY)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_id")
-	private Category category;
-	@ManyToOne(fetch = FetchType.LAZY )
-	@JoinColumn(name= "icon_id")
-	private Icon icon;
-	@ManyToOne(fetch = FetchType.LAZY )
-	@JoinColumn(name= "user_id", nullable=false)
-	private User user;
-	
 	private Date createdAt;
-	
 	private int seenqty;//number of times password seen
 	
-	private String url;
-
-	public Password() {
-		super();
-	}
+	private Category category;
 	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
+	private Icon icon;
+	
+	private String url;
+	
+	public PasswordResponse() {
+		super();
 	}
 
 	public String getName() {
@@ -124,5 +93,5 @@ public class Password {
 	public void setUserOrMail(String userOrMail) {
 		this.userOrMail = userOrMail;
 	}
-	
+
 }

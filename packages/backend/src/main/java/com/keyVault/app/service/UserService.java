@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.keyVault.app.dto.UserDTO;
+import com.keyVault.app.dto.UserResponse;
 import com.keyVault.app.entity.User;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.UserRepository;
@@ -17,30 +18,35 @@ public class UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public UserDTO registerUser (UserDTO userDTO) {
+	public UserResponse registerUser (UserDTO userDTO) {
 		User user = mappingEntity(userDTO);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setCreatedAt(new Date());
 		user.setEnabled(true);
 		User newUser = userRepository.save(user);
 		
-		UserDTO responseUser = mappingDTO(newUser);
+		UserDTO userDTO2 = mappingDTO(newUser);
+		UserResponse responseUser = mappingResponse(userDTO2);
 		return responseUser;
 	}
 	
-	public UserDTO findUserById(int id) {
+	public UserResponse findUserById(int id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-		return mappingDTO(user);
+		UserDTO userDTO = mappingDTO(user);
+		UserResponse userResponse = mappingResponse(userDTO);
+		return userResponse;
 	}
 	
-	public UserDTO updateUser(UserDTO userDTO, int id) {
+	public UserResponse updateUser(UserDTO userDTO, int id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 		
 		user.setEmail(userDTO.getEmail());
 		user.setPassword(userDTO.getPassword());
 		
 		User updatedUser =userRepository.save(user);
-		return mappingDTO(updatedUser);
+		UserDTO userDTO2 = mappingDTO(user);
+		UserResponse userResponse = mappingResponse(userDTO2);
+		return userResponse;
 	}
 	
 	public void deleteUser(int id) {
@@ -52,7 +58,12 @@ public class UserService {
 		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 		return userDTO;
 	}
-	
+	public UserResponse mappingResponse(UserDTO userDTO) {
+		UserResponse userResponse = null;
+		userResponse.setEmail(userDTO.getEmail());
+		userResponse.setCreatedAt(userDTO.getCreatedAt());
+		return userResponse;
+	}
 	public User mappingEntity (UserDTO userDTO) {
 		User user = modelMapper.map(userDTO, User.class);
 		return user;

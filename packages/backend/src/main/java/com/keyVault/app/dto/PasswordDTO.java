@@ -2,6 +2,7 @@ package com.keyVault.app.dto;
 import java.util.Date;
 import com.keyVault.app.entity.Category;
 import com.keyVault.app.entity.Icon;
+import com.keyVault.app.entity.User;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -24,6 +25,8 @@ public class PasswordDTO {
 	private Category category;
 	
 	private Icon icon;
+	
+	private User user;
 	
 	private String url;
 	
@@ -97,6 +100,14 @@ public class PasswordDTO {
 
 	public String getUserOrMail() {
 		return userOrMail;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public void setUserOrMail(String userOrMail) {

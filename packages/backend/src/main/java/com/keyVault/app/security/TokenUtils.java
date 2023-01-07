@@ -20,10 +20,10 @@ public class TokenUtils {
 	public static String createToken(int id) {
 		long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
 		Date expirationDate = new Date(System.currentTimeMillis()* expirationTime);
-		System.out.println(id);
+		
 		Map<String, Object> extra = new HashMap<>();
 		extra.put("id", String.valueOf(id));
-		
+
 		return Jwts.builder()
 				.setExpiration(expirationDate)
 				.addClaims(extra)

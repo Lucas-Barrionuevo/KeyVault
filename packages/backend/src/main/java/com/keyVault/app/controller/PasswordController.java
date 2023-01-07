@@ -20,14 +20,14 @@ public class PasswordController {
 	@Autowired
 	private PasswordService passwordService;
 	
-	@GetMapping("/{user_id}")
+	@GetMapping
 	public ResponseEntity<?> getPasswordsForUSer (@PathVariable(name = "user_id") int user_id){
 		return ResponseEntity.ok(passwordService.findAllPasswordsForUser(user_id));
 	}
-	/*@GetMapping("/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getPassword (@PathVariable(name = "id") int id){
 		return ResponseEntity.ok(passwordService.findPasswordById(id));
-	}*/
+	}
 	@PostMapping
 	public ResponseEntity<?> createPassword(@Valid @RequestBody PasswordDTO passwordDTO){
 		return new ResponseEntity<>(passwordService.createPassword(passwordDTO),HttpStatus.CREATED);
