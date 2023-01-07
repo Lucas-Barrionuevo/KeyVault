@@ -26,10 +26,21 @@ public class Category {
 	private String name;
 	
 	private String preview;
-	
+	@ManyToOne(fetch = FetchType.LAZY )
+	@JoinColumn(name= "user_id", nullable=false)
+	private User user;
 	public Category() {
 		super();
 	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public int getId() {
 		return id;
 	}

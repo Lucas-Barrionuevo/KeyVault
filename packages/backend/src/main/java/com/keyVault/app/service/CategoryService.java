@@ -5,10 +5,12 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.keyVault.app.dto.CategoryDTO;
 import com.keyVault.app.entity.Category;
+import com.keyVault.app.exceptions.KeyVaultAppException;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
 @Service
@@ -20,6 +22,7 @@ public class CategoryService {
 	private ModelMapper modelMapper;
 	
 	public CategoryDTO createCategory (CategoryDTO categoryDTO) {
+		
 		Category category = mappingEntity(categoryDTO);
 		
 		Category newCategory = categoryRepository.save(category);
@@ -27,9 +30,10 @@ public class CategoryService {
 		CategoryDTO responseCategory = mappingDTO(newCategory);
 		return responseCategory;
 	}
-	
-	public List<CategoryDTO> findAllCategories(){
-		List<Category> AllCategories = categoryRepository.findAll();
+
+
+	public List<CategoryDTO> findAllCategoriesForUser(int user_id){
+		List<Category> AllCategories = categoryRepository.findByUser_id(user_id);
 		List<CategoryDTO> AllResponseCategories = AllCategories.stream().map(category -> mappingDTO(category)).collect(Collectors.toList());
 		return AllResponseCategories;
 	}

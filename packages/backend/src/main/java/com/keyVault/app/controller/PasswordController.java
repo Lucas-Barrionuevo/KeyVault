@@ -1,4 +1,7 @@
 package com.keyVault.app.controller;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.keyVault.app.dto.PasswordDTO;
+import com.keyVault.app.entity.Category;
+import com.keyVault.app.exceptions.ResourceNotFoundException;
+import com.keyVault.app.repository.CategoryRepository;
+import com.keyVault.app.service.CategoryService;
 import com.keyVault.app.service.PasswordService;
 
 import jakarta.validation.Valid;
@@ -19,10 +26,11 @@ import jakarta.validation.Valid;
 public class PasswordController {
 	@Autowired
 	private PasswordService passwordService;
-	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	@GetMapping
-	public ResponseEntity<?> getPasswordsForUSer (@PathVariable(name = "user_id") int user_id){
-		return ResponseEntity.ok(passwordService.findAllPasswordsForUser(user_id));
+	public ResponseEntity<?> getPasswordsForUSer (){
+		return ResponseEntity.ok(passwordService.findAllPasswordsForUser());
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPassword (@PathVariable(name = "id") int id){
@@ -30,6 +38,17 @@ public class PasswordController {
 	}
 	@PostMapping
 	public ResponseEntity<?> createPassword(@Valid @RequestBody PasswordDTO passwordDTO){
+		if (passwordDTO.getCategory() != null){
+			Optional<Category> enteredCategory = categoryRepository.findById(passwordDTO.getCategory().getId());
+			if(enteredCategory.isEmpty()){
+				Category category = new Category();
+				category.setUser(passwordDTO.getUser());
+				category.setName("hola");
+				categoryRepository.save(category);
+				return new ResponseEntity<>(passwordService.createPassword(passwordDTO),HttpStatus.CREATED);
+			}
+			return new ResponseEntity<>(passwordService.createPassword(passwordDTO),HttpStatus.CREATED);
+		}
 		return new ResponseEntity<>(passwordService.createPassword(passwordDTO),HttpStatus.CREATED);
 	}
 	@PutMapping("/{id}")

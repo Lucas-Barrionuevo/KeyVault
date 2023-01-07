@@ -2,6 +2,7 @@ package com.keyVault.app.dto;
 
 import java.util.Set;
 import com.keyVault.app.entity.Password;
+import com.keyVault.app.entity.User;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -16,10 +17,20 @@ public class CategoryDTO {
 	
 	private String preview;
 	
+	private User user;
+	
 	public CategoryDTO() {
 		super();
 	}
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -14,7 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 public class TokenUtils {
-	private final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
+	public final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
 	private final static long ACCESS_TOKEN_VALIDITY_SECONDS = 2_592_000L;
 	
 	public static String createToken(int id) {
@@ -23,8 +23,9 @@ public class TokenUtils {
 		
 		Map<String, Object> extra = new HashMap<>();
 		extra.put("id", String.valueOf(id));
-
+		
 		return Jwts.builder()
+				.setSubject(String.valueOf(id))
 				.setExpiration(expirationDate)
 				.addClaims(extra)
 				.signWith(Keys.hmacShaKeyFor(ACCESS_TOKEN_SECRET.getBytes()))
@@ -40,6 +41,7 @@ public class TokenUtils {
 					.getBody();
 			
 			String id = claims.getSubject();
+			
 			return new UsernamePasswordAuthenticationToken(id, null, Collections.emptyList());
 		} catch (JwtException e) {
 			return null;

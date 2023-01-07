@@ -56,7 +56,8 @@ public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilt
 		//UserResponse userResponse = userService.findUserById(id);
 		//response.addHeader("Authorization", "Bearer " + token);
 		//response.getWriter().println(userResponse);
-		response.getWriter().println(tokenDTO);
+		response.getWriter().write(token);
+		//response.getWriter().println(tokenDTO);
 		
 		response.getWriter().flush();
 		
