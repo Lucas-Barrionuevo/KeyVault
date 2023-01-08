@@ -39,11 +39,11 @@ public class CategoryController {
 		return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
 		
 	}
-	/*@GetMapping("/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getCagory (@PathVariable(name = "id") int id){
 		return ResponseEntity.ok(categoryService.findCategoryById(id));
-	}*/
-	@GetMapping("/{user_id}")
+	}
+	@GetMapping
 	public ResponseEntity<?> getCagories (@PathVariable(name = "user_id") int user_id){
 		return ResponseEntity.ok(categoryService.findAllCategoriesForUser(user_id));
 	}
