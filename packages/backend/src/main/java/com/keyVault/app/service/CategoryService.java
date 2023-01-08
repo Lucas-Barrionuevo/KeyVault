@@ -1,5 +1,6 @@
 package com.keyVault.app.service;
 
+import java.io.BufferedReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,8 @@ import com.keyVault.app.entity.Category;
 import com.keyVault.app.exceptions.KeyVaultAppException;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class CategoryService {
 	@Autowired
@@ -32,8 +35,8 @@ public class CategoryService {
 	}
 
 
-	public List<CategoryDTO> findAllCategoriesForUser(int user_id){
-		List<Category> AllCategories = categoryRepository.findByUser_id(user_id);
+	public List<CategoryDTO> findAllCategoriesForUser(){
+		List<Category> AllCategories = categoryRepository.findByUser_id(3);
 		List<CategoryDTO> AllResponseCategories = AllCategories.stream().map(category -> mappingDTO(category)).collect(Collectors.toList());
 		return AllResponseCategories;
 	}

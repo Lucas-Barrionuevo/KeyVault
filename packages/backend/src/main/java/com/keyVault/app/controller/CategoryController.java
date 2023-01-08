@@ -44,8 +44,8 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryService.findCategoryById(id));
 	}
 	@GetMapping
-	public ResponseEntity<?> getCagories (@PathVariable(name = "user_id") int user_id){
-		return ResponseEntity.ok(categoryService.findAllCategoriesForUser(user_id));
+	public ResponseEntity<?> getCagories (){
+		return ResponseEntity.ok(categoryService.findAllCategoriesForUser());
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateCategory(@PathVariable(name = "id") int id, @Valid @RequestBody CategoryDTO categoryDTO){

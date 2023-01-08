@@ -3,16 +3,13 @@ package com.keyVault.app.security;
 import java.util.Collections;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.keyVault.app.dto.TokenDTO;
-import com.keyVault.app.dto.UserResponse;
-import com.keyVault.app.service.UserService;
+import com.github.cliftonlabs.json_simple.JsonObject;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+	public final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
@@ -47,18 +45,22 @@ public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilt
 		int id= userDetails.getUser().getId();
 		String token = TokenUtils.createToken(id);
 		Claims claims = Jwts.parserBuilder()
-				.setSigningKey("$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo".getBytes())
+				.setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
 				.build()
 				.parseClaimsJws(token)
 				.getBody();
 		Date expirationToken = claims.getExpiration();
-		TokenDTO tokenDTO = new TokenDTO(token, expirationToken);
+		JsonObject json = new JsonObject();
+		json.put("token", token);
+		json.put("expirationToken", expirationToken);
+		//TokenDTO tokenDTO = new TokenDTO(token, expirationToken);
+		System.out.println(json);
 		//UserResponse userResponse = userService.findUserById(id);
 		//response.addHeader("Authorization", "Bearer " + token);
 		//response.getWriter().println(userResponse);
-		response.getWriter().write(token);
-		//response.getWriter().println(tokenDTO);
-		
+		//response.getWriter().write(token);
+		//response.getWriter().print(tokenDTO);
+		response.getWriter().println(json);
 		response.getWriter().flush();
 		
 		super.successfulAuthentication(request, response, chain, authResult);

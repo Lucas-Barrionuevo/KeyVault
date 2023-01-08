@@ -26,7 +26,18 @@ public class WebSecurityConfig {
 		JWTAtuthenticationFilter jwtAuthenticationFilter= new JWTAtuthenticationFilter();
 		jwtAuthenticationFilter.setAuthenticationManager(authManager);
 		jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");
-		
+		/*http.csrf().disable()
+	    .exceptionHandling()
+	    .and()
+	    .sessionManagement()
+	    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	    .and()
+	    .authorizeRequests().requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+	    .requestMatchers("/api/auth/**").permitAll()
+	    .anyRequest()
+	    .authenticated();
+		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		*/
 		return http
 				.csrf().disable()
 				.authorizeRequests()
