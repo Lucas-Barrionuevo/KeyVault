@@ -9,7 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.cliftonlabs.json_simple.JsonObject;
+import com.keyVault.app.dto.TokenDTO;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -50,17 +50,14 @@ public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilt
 				.parseClaimsJws(token)
 				.getBody();
 		Date expirationToken = claims.getExpiration();
-		JsonObject json = new JsonObject();
-		json.put("token", token);
-		json.put("expirationToken", expirationToken);
-		//TokenDTO tokenDTO = new TokenDTO(token, expirationToken);
-		System.out.println(json);
+		TokenDTO tokenDTO = new TokenDTO(token, expirationToken);
+		System.out.println(tokenDTO);
 		//UserResponse userResponse = userService.findUserById(id);
 		//response.addHeader("Authorization", "Bearer " + token);
 		//response.getWriter().println(userResponse);
 		//response.getWriter().write(token);
 		//response.getWriter().print(tokenDTO);
-		response.getWriter().println(json);
+		response.getWriter().println(token);
 		response.getWriter().flush();
 		
 		super.successfulAuthentication(request, response, chain, authResult);

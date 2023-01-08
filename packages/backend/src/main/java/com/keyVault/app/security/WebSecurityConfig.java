@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -26,18 +27,6 @@ public class WebSecurityConfig {
 		JWTAtuthenticationFilter jwtAuthenticationFilter= new JWTAtuthenticationFilter();
 		jwtAuthenticationFilter.setAuthenticationManager(authManager);
 		jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");
-		/*http.csrf().disable()
-	    .exceptionHandling()
-	    .and()
-	    .sessionManagement()
-	    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	    .and()
-	    .authorizeRequests().requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-	    .requestMatchers("/api/auth/**").permitAll()
-	    .anyRequest()
-	    .authenticated();
-		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-		*/
 		return http
 				.csrf().disable()
 				.authorizeRequests()
