@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.UserRepository;
 
 @Service
@@ -17,10 +18,12 @@ public class CustomUserDetailsService implements UserDetailsService{
 	private UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		com.keyVault.app.entity.User user = userRepository.findOneByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con ese username o email : " + email));
-	
+	public UserDetails loadUserByUsername(String emailOrId) throws UsernameNotFoundException {
+		if(emailOrId.contains("@")) {
+			com.keyVault.app.entity.User user = userRepository.findOneByEmail(emailOrId).orElseThrow(() -> new ResourceNotFoundException("User", "email", 0));
+			return new UserDetailsImpl(user);
+		}
+		com.keyVault.app.entity.User user = userRepository.findById(Integer.valueOf(emailOrId)).orElseThrow(() -> new ResourceNotFoundException("User", "id", 0));
 		return new UserDetailsImpl(user);
 	}
 }

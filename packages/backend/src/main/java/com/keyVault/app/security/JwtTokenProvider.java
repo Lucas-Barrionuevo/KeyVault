@@ -36,12 +36,13 @@ public class JwtTokenProvider {
 	public String generarToken(Authentication authentication) {
 		String email = authentication.getName();
 		User user = userRepository.findOneByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User", "email", 0));
+		String idString = String.valueOf(user.getId());
 		Date fechaActual = new Date();
 		Date fechaExpiracion = new Date(fechaActual.getTime() + jwtExpirationInMs);
 		Map<String, Object> extra = new HashMap<>();
-		extra.put("email", email);
+		extra.put("id", idString);
 		String token =  Jwts.builder()
-				.setSubject(email)
+				.setSubject(idString)
 				.setExpiration(fechaExpiracion)
 				.addClaims(extra)
 				.signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
