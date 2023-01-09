@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.keyVault.app.entity.User;
@@ -25,7 +26,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 
 @Component
-public class JwtTokenProvider extends java.lang.Object{
+public class JwtTokenProvider {
 
 	@Value("${app.jwt-secret}")
 	private String jwtSecret;
@@ -87,4 +88,7 @@ public class JwtTokenProvider extends java.lang.Object{
 			throw new KeyVaultAppException(HttpStatus.BAD_REQUEST,"La cadena claims JWT esta vacia");
 		}
 	}
+	/*public static void main (String[] args) {
+	System.out.println("password " + new BCryptPasswordEncoder().encode("prueba"));
+	}*/
 }

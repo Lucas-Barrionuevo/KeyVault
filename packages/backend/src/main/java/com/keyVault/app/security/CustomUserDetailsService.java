@@ -17,12 +17,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 	private UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		com.keyVault.app.entity.User user = userRepository.findOneByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con ese username o email : " + email));
+	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+		com.keyVault.app.entity.User user = userRepository.findById(Integer.parseInt(id))
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con ese username o email : " + id));
 	
 		return new UserDetailsImpl(user);
 	}
-
-
 }
