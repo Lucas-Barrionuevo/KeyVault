@@ -15,6 +15,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import jakarta.servlet.Filter;
+
 @Configuration
 public class WebSecurityConfig {
 	@Autowired
@@ -39,7 +41,7 @@ public class WebSecurityConfig {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.addFilter(jwtAuthenticationFilter)
-				.addFilterBefore(jwtAuthorizationFilter,UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore((Filter) jwtAuthorizationFilter,UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
 	@Bean

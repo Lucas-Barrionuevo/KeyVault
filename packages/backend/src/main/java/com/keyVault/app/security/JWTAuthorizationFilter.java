@@ -2,6 +2,7 @@ package com.keyVault.app.security;
 
 import java.io.IOException;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
