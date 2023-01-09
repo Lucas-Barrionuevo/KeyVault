@@ -38,20 +38,6 @@ public class SecurityConfig  {
 	@Bean
 	SecurityFilterChain filterChan (HttpSecurity http, AuthenticationManager authManager) throws Exception {
 		JwtAuthenticationFilter jwtAuthenticationFilter= new JwtAuthenticationFilter();
-		//jwtAuthenticationFilter.setAuthenticationManager(authManager);
-		//jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");
-		/*http.csrf().disable()
-		    .exceptionHandling()
-		    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-		    .and()
-		    .sessionManagement()
-		    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		    .and()
-		    .authorizeRequests().antMatchers(HttpMethod.GET, "/api/**").permitAll()
-		    .antMatchers("/api/auth/**").permitAll()
-		    .anyRequest()
-		    .authenticated();
-		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);*/
 		return http
 				.csrf().disable()
 				.exceptionHandling()

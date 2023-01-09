@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.keyVault.app.entity.User;
@@ -37,24 +36,16 @@ public class JwtTokenProvider {
 	public String generarToken(Authentication authentication) {
 		String email = authentication.getName();
 		User user = userRepository.findOneByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User", "email", 0));
-		String idString= String.valueOf(user.getId());
 		Date fechaActual = new Date();
 		Date fechaExpiracion = new Date(fechaActual.getTime() + jwtExpirationInMs);
 		Map<String, Object> extra = new HashMap<>();
-		extra.put("id", idString);
+		extra.put("email", email);
 		String token =  Jwts.builder()
-				.setSubject(idString)
+				.setSubject(email)
 				.setExpiration(fechaExpiracion)
 				.addClaims(extra)
 				.signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
 				.compact();
-		/*Token jwtToken = new JwtToken();
-		// Complete todos los parámetros: algoritmo, emisor, tiempo de vencimiento, otras reclamaciones, etc. // Obtenga la clave privada y firme el token con una clave secreta o una clave privada
-		jwtToken.setAlgorithm(JwtToken.SIGN_ALGORITHM.HS256.toString());
-		jwtToken.setType(JwtToken.JWT);
-		jwtToken.setIssuer("my.oracle.com");
-		jwtToken.setPrincipal("john.doe");
-	*/	
 		return token;
 	}
 	
@@ -88,7 +79,4 @@ public class JwtTokenProvider {
 			throw new KeyVaultAppException(HttpStatus.BAD_REQUEST,"La cadena claims JWT esta vacia");
 		}
 	}
-	/*public static void main (String[] args) {
-	System.out.println("password " + new BCryptPasswordEncoder().encode("prueba"));
-	}*/
 }
