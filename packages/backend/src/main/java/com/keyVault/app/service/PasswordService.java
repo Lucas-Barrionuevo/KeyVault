@@ -14,11 +14,7 @@ import com.keyVault.app.repository.CategoryRepository;
 import com.keyVault.app.repository.IconRepository;
 import com.keyVault.app.repository.PasswordRepository;
 import com.keyVault.app.repository.UserRepository;
-import com.keyVault.app.security.TokenUtils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class PasswordService {
 	@Autowired
@@ -35,22 +31,7 @@ public class PasswordService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	private TokenUtils tokenUtils;
-	private final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
-	private HttpServletRequest request;
 	
-	public int decryptToken() {
-		String bearerToken = request.getHeader("Authorization");
-		String token = bearerToken.replace("Bearer ", "");
-		Claims claims = Jwts.parserBuilder()
-				.setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
-				.build()
-				.parseClaimsJws(token)
-				.getBody();
-		
-		String idString = claims.getSubject();
-		return Integer.parseInt(idString);
-	}
 	public PasswordResponse2 createPassword (PasswordDTO passwordDTO) {
 		Password password = mappingEntity(passwordDTO);
 		password.setCreatedAt(new Date());
@@ -71,8 +52,7 @@ public class PasswordService {
 	}
 	
 	public List<PasswordResponse2> findAllPasswordsForUser(){
-		int user_id = decryptToken();
-		List<Password> AllPasswords = passwordRepository.findByUser_id(user_id);
+		List<Password> AllPasswords = passwordRepository.findByUser_id(2);
 		List<PasswordDTO> AllPasswordsDTO = AllPasswords.stream().map(password -> mappingDTO(password)).collect(Collectors.toList());
 		List<PasswordResponse2> AllResponsePasswords = AllPasswordsDTO.stream().map(passwordDTO -> mappingResponse2(passwordDTO)).collect(Collectors.toList());
 		return AllResponsePasswords;

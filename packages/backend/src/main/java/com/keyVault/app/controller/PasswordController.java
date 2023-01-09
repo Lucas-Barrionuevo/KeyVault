@@ -1,5 +1,4 @@
 package com.keyVault.app.controller;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.keyVault.app.dto.PasswordDTO;
 import com.keyVault.app.entity.Category;
-import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
-import com.keyVault.app.service.CategoryService;
 import com.keyVault.app.service.PasswordService;
 
 import jakarta.validation.Valid;

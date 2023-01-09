@@ -1,6 +1,10 @@
 package com.keyVault.app.entity;
 
+import java.util.Collection;
 import java.util.Date;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +27,12 @@ public class User {
 	private Date createdAt;
 	@Column(nullable = false)
 	private boolean enabled;
+	
+	public User(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
 	public User() {
 		super();
 	}
@@ -32,6 +42,7 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -56,5 +67,4 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
 }

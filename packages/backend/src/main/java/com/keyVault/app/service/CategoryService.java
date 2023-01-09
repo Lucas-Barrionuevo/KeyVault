@@ -1,21 +1,15 @@
 package com.keyVault.app.service;
-
-import java.io.BufferedReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.keyVault.app.dto.CategoryDTO;
 import com.keyVault.app.entity.Category;
-import com.keyVault.app.exceptions.KeyVaultAppException;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
-
-import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class CategoryService {
 	@Autowired
