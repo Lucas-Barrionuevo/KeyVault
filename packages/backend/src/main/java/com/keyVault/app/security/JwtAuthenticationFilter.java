@@ -27,10 +27,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		//validamos el token
 		if(StringUtils.hasText(token) && jwtTokenProvider.validarToken(token)) {
 			//obtenemos el username del token
-			String username = jwtTokenProvider.obtenerUsernameDelJWT(token);
+			String idString = jwtTokenProvider.obtenerUsernameDelJWT(token);
 			
 			//cargamos el usuario asociado al token
-			UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+			UserDetails userDetails = customUserDetailsService.loadUserByUsername(idString);
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
 			authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 			
