@@ -14,6 +14,7 @@ import com.keyVault.app.entity.Category;
 import com.keyVault.app.exceptions.KeyVaultAppException;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
+import com.keyVault.app.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 @Service
@@ -23,11 +24,13 @@ public class CategoryService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private UserRepository userRepository;
 	
-	public CategoryDTO createCategory (CategoryDTO categoryDTO) {
-		
+	public CategoryDTO createCategory (CategoryDTO categoryDTO, int userId) {
+	
 		Category category = mappingEntity(categoryDTO);
-		
+		category.setUser(userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", userId)));
 		Category newCategory = categoryRepository.save(category);
 		
 		CategoryDTO responseCategory = mappingDTO(newCategory);

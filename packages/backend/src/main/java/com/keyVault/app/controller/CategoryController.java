@@ -20,8 +20,10 @@ import com.keyVault.app.dto.CategoryDTO;
 import com.keyVault.app.entity.Category;
 import com.keyVault.app.exceptions.KeyVaultAppException;
 import com.keyVault.app.repository.CategoryRepository;
+import com.keyVault.app.security.TokenUtils;
 import com.keyVault.app.service.CategoryService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/category")
@@ -34,14 +36,16 @@ public class CategoryController {
 	private CategoryRepository categoryRepository;
 	
 	@PostMapping
-	public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
-		List<Category> categoriesForUser = categoryRepository.findByUser_id(categoryDTO.getUser().getId());
+	public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO, HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		List<Category> categoriesForUser = categoryRepository.findByUser_id(userId);
 		for(Category category:categoriesForUser) {
 			if(category.getName().equals(categoryDTO.getName())== true) {
 				return new ResponseEntity<>("The category with that name is already created",HttpStatus.BAD_REQUEST);
 			}
 		}
-		return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
+		return new ResponseEntity<>(categoryService.createCategory(categoryDTO,userId), HttpStatus.CREATED);
 		
 	}
 	@GetMapping("/{id}")

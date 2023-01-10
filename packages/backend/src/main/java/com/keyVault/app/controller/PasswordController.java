@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.keyVault.app.dto.PasswordDTO;
+import com.keyVault.app.dto.PasswordResponse;
 import com.keyVault.app.entity.Category;
+import com.keyVault.app.entity.Password;
 import com.keyVault.app.entity.User;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
+import com.keyVault.app.repository.PasswordRepository;
 import com.keyVault.app.repository.UserRepository;
 import com.keyVault.app.security.TokenUtils;
 import com.keyVault.app.service.CategoryService;
@@ -35,33 +38,31 @@ public class PasswordController {
 	@Autowired
 	private PasswordService passwordService;
 	@Autowired
+	private PasswordRepository passwordRepository;
+	@Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired 
 	private UserRepository userRepository;
-	@Autowired
-	private AuthenticationManager authenticationManager;
-	public final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
 	@GetMapping
 	public ResponseEntity<?> getPasswordsForUSer (HttpServletRequest request){
-		String bearerToken = request.getHeader("Authorization");
-		String token = bearerToken.replace("Bearer ", "");
-		System.out.println(token);
-		Claims claims = Jwts.parserBuilder()
-				.setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
-				.build()
-				.parseClaimsJws(token)
-				.getBody();
-		
-		String id = claims.getSubject();
-		System.out.println(id);
-		return ResponseEntity.ok(passwordService.findAllPasswordsForUser());
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		return ResponseEntity.ok(passwordService.findAllPasswordsForUser(userId));
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getPassword (@PathVariable(name = "id") int id){
+	public ResponseEntity<?> getPassword (@PathVariable(name = "id") int id, HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Password password = passwordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Password", "id", id));
+		if (password.getUser().getId() != userId) {
+			return new ResponseEntity<>("The password indicated does not match the username", HttpStatus.NOT_FOUND);
+		}
 		return ResponseEntity.ok(passwordService.findPasswordById(id));
 	}
 	@PostMapping
-	public ResponseEntity<?> createPassword(@Valid @RequestBody PasswordDTO passwordDTO){
+	public ResponseEntity<?> createPassword(@Valid @RequestBody PasswordDTO passwordDTO, HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
 		if (passwordDTO.getCategory() != null){
 			Optional<Category> enteredCategory = categoryRepository.findById(passwordDTO.getCategory().getId());
 			if(enteredCategory.isEmpty()){
@@ -69,18 +70,30 @@ public class PasswordController {
 				category.setUser(passwordDTO.getUser());
 				category.setName("hola");
 				categoryRepository.save(category);
-				return new ResponseEntity<>(passwordService.createPassword(passwordDTO),HttpStatus.CREATED);
+				return new ResponseEntity<>(passwordService.createPassword(passwordDTO,userId),HttpStatus.CREATED);
 			}
-			return new ResponseEntity<>(passwordService.createPassword(passwordDTO),HttpStatus.CREATED);
+			return new ResponseEntity<>(passwordService.createPassword(passwordDTO,userId),HttpStatus.CREATED);
 		}
-		return new ResponseEntity<>(passwordService.createPassword(passwordDTO),HttpStatus.CREATED);
+		return new ResponseEntity<>(passwordService.createPassword(passwordDTO,userId),HttpStatus.CREATED);
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updatePassword(@PathVariable(name = "id") int id,@Valid @RequestBody PasswordDTO passwordDTO){
+	public ResponseEntity<?> updatePassword(@PathVariable(name = "id") int id,@Valid @RequestBody PasswordDTO passwordDTO, HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Password password = passwordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Password", "id", id));
+		if (password.getUser().getId() != userId) {
+			return new ResponseEntity<>("The password indicated does not match the username", HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(passwordService.updatePassword(passwordDTO, id),HttpStatus.OK);
 	}
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deletePassword(@PathVariable(name = "id") int id){
+	public ResponseEntity<?> deletePassword(@PathVariable(name = "id") int id, HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Password password = passwordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Password", "id", id));
+		if (password.getUser().getId() != userId) {
+			return new ResponseEntity<>("The password indicated does not match the username", HttpStatus.NOT_FOUND);
+		}
 		passwordService.deletePassword(id);
 		return new ResponseEntity<>("Password removed successfully", HttpStatus.OK);
 	}

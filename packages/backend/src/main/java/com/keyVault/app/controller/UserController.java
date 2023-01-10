@@ -29,6 +29,7 @@ public class UserController {
 	private UserRepository userRepository;
 	@Autowired(required=false)
 	private TokenUtils tokenUtils;
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUser(@PathVariable(name = "id") int id){
 		return ResponseEntity.ok(userService.findUserById(id));

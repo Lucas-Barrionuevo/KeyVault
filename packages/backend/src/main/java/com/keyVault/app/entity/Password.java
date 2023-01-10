@@ -20,7 +20,6 @@ public class Password {
 	private int id;
 	@Column(nullable = false)
 	private String content;
-	@Column(nullable= false)
 	private String name;
 	@Column(nullable = false)
 	private String userOrMail;
@@ -34,6 +33,8 @@ public class Password {
 	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name= "user_id", nullable=false)
 	private User user;
+	
+	private String categoryName;
 	
 	private Date createdAt;
 	

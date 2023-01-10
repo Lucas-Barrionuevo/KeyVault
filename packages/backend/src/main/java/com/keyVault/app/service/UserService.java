@@ -24,7 +24,6 @@ public class UserService {
 		user.setCreatedAt(new Date());
 		user.setEnabled(true);
 		User newUser = userRepository.save(user);
-		
 		UserDTO userDTO2 = mappingDTO(newUser);
 		UserResponse responseUser = mappingResponse(userDTO2);
 		return responseUser;
@@ -59,7 +58,8 @@ public class UserService {
 		return userDTO;
 	}
 	public UserResponse mappingResponse(UserDTO userDTO) {
-		UserResponse userResponse = null;
+		UserResponse userResponse = new UserResponse();
+		userResponse.setId(userDTO.getId());
 		userResponse.setEmail(userDTO.getEmail());
 		userResponse.setCreatedAt(userDTO.getCreatedAt());
 		return userResponse;

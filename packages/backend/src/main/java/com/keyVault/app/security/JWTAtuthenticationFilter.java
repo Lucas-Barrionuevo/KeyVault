@@ -32,7 +32,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	public static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
+	public final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
 	@Autowired
 	private UserService userService;
 	

@@ -2,8 +2,11 @@ package com.keyVault.app.service;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.catalina.connector.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +16,7 @@ import com.keyVault.app.dto.PasswordResponse;
 import com.keyVault.app.dto.PasswordResponse2;
 import com.keyVault.app.entity.Password;
 import com.keyVault.app.entity.User;
+import com.keyVault.app.exceptions.KeyVaultAppException;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
 import com.keyVault.app.repository.IconRepository;
@@ -41,16 +45,17 @@ public class PasswordService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public PasswordResponse2 createPassword (PasswordDTO passwordDTO) {
+	public PasswordResponse2 createPassword (PasswordDTO passwordDTO,int userId) {
 		Password password = mappingEntity(passwordDTO);
 		password.setCreatedAt(new Date());
+		password.setUser(userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", userId)));
 		if(password.getCategory()!=null) {
 			password.setCategory(categoryRepository.findById(password.getCategory().getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", password.getCategory().getId())));
 		}
 		if (password.getIcon() != null) {
 			password.setIcon(iconRepository.findById(password.getIcon().getId()).orElseThrow(() -> new ResourceNotFoundException("Icon", "id", password.getIcon().getId())));
 		}
-		if(password.getUser()== null) {
+		if(password.getUser()!= null) {
 			password.setUser(userRepository.findById(password.getUser().getId()).orElseThrow(()-> new ResourceNotFoundException("User", "id",password.getUser().getId() )));
 		}
 		Password newPassword = passwordRepository.save(password);
@@ -60,8 +65,8 @@ public class PasswordService {
 		return passwordResponse;
 	}
 	
-	public List<PasswordResponse2> findAllPasswordsForUser(){
-		List<Password> AllPasswords = passwordRepository.findByUser_id(2);
+	public List<PasswordResponse2> findAllPasswordsForUser(int userId){
+		List<Password> AllPasswords = passwordRepository.findByUser_id(userId);
 		List<PasswordDTO> AllPasswordsDTO = AllPasswords.stream().map(password -> mappingDTO(password)).collect(Collectors.toList());
 		List<PasswordResponse2> AllResponsePasswords = AllPasswordsDTO.stream().map(passwordDTO -> mappingResponse2(passwordDTO)).collect(Collectors.toList());
 		return AllResponsePasswords;

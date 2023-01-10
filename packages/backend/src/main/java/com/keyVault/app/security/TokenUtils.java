@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.hibernate.boot.model.source.internal.hbm.AbstractSingularAttributeSourceEmbeddedImpl;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class TokenUtils {
 	public final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
@@ -47,4 +49,19 @@ public class TokenUtils {
 			return null;
 		}
 	}
+
+    
+    public int getIdByToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        String token = bearerToken.replace("Bearer ", "");
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        int id = Integer.parseInt(claims.getSubject());
+        ;
+        return id;
+    }
 }
