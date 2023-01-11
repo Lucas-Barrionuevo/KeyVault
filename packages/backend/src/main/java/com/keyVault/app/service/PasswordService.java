@@ -55,11 +55,7 @@ public class PasswordService {
 		if (password.getIcon() != null) {
 			password.setIcon(iconRepository.findById(password.getIcon().getId()).orElseThrow(() -> new ResourceNotFoundException("Icon", "id", password.getIcon().getId())));
 		}
-		if(password.getUser()!= null) {
-			password.setUser(userRepository.findById(password.getUser().getId()).orElseThrow(()-> new ResourceNotFoundException("User", "id",password.getUser().getId() )));
-		}
 		Password newPassword = passwordRepository.save(password);
-		
 		PasswordDTO PasswordDTO = mappingDTO(newPassword);
 		PasswordResponse2 passwordResponse = mappingResponse2(PasswordDTO);
 		return passwordResponse;

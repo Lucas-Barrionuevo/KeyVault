@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.keyVault.app.dto.CategoryDTO;
 import com.keyVault.app.entity.Category;
 import com.keyVault.app.exceptions.KeyVaultAppException;
+import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.CategoryRepository;
 import com.keyVault.app.security.TokenUtils;
 import com.keyVault.app.service.CategoryService;
@@ -49,19 +50,39 @@ public class CategoryController {
 		
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getCagory (@PathVariable(name = "id") int id){
+	public ResponseEntity<?> getCagory (@PathVariable(name = "id") int id, HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
+		if (category.getUser().getId() != userId) {
+			return new ResponseEntity<>("The category indicated does not match the username", HttpStatus.NOT_FOUND);
+		}
 		return ResponseEntity.ok(categoryService.findCategoryById(id));
 	}
 	@GetMapping
-	public ResponseEntity<?> getCagories (){
-		return ResponseEntity.ok(categoryService.findAllCategoriesForUser());
+	public ResponseEntity<?> getCagoriesForUser (HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		return ResponseEntity.ok(categoryService.findAllCategoriesForUser(userId));
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateCategory(@PathVariable(name = "id") int id, @Valid @RequestBody CategoryDTO categoryDTO){
+	public ResponseEntity<?> updateCategory(@PathVariable(name = "id") int id, @Valid @RequestBody CategoryDTO categoryDTO, HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
+		if (category.getUser().getId() != userId) {
+			return new ResponseEntity<>("The category indicated does not match the username", HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(categoryService.updateCategory(categoryDTO, id), HttpStatus.OK);
 	}
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteCategory(@PathVariable(name = "id") int id){
+	public ResponseEntity<?> deleteCategory(@PathVariable(name = "id") int id,HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
+		if (category.getUser().getId() != userId) {
+			return new ResponseEntity<>("The category indicated does not match the username", HttpStatus.NOT_FOUND);
+		}
 		categoryService.deleteCategory(id);
 		return new ResponseEntity<>("Category removed successfully", HttpStatus.OK);
 	}

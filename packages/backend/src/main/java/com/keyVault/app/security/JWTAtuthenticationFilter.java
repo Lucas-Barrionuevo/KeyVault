@@ -71,15 +71,10 @@ public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilt
 		JsonObject tokenObj = new JsonObject();
 		tokenObj.addProperty("token", token);
 		tokenObj.addProperty("expirationDate", expirationToken.toString());
-		
-		JsonObject userObj = new JsonObject();
-		userObj.addProperty("user", myGson.toJson(userDetails));
+		tokenObj.addProperty("user", myGson.toJson(userDetails));
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		userObj.add("token", tokenObj);
-		String res = myGson.toJson(userObj);
-		out.print(res);
 		out.flush();
 		
 		super.successfulAuthentication(request, response, chain, authResult);

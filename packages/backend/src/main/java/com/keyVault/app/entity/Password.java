@@ -34,8 +34,6 @@ public class Password {
 	@JoinColumn(name= "user_id", nullable=false)
 	private User user;
 	
-	private String categoryName;
-	
 	private Date createdAt;
 	
 	private int seenqty;//number of times password seen

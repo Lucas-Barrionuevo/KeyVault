@@ -28,7 +28,6 @@ public class CategoryService {
 	private UserRepository userRepository;
 	
 	public CategoryDTO createCategory (CategoryDTO categoryDTO, int userId) {
-	
 		Category category = mappingEntity(categoryDTO);
 		category.setUser(userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", userId)));
 		Category newCategory = categoryRepository.save(category);
@@ -36,10 +35,9 @@ public class CategoryService {
 		CategoryDTO responseCategory = mappingDTO(newCategory);
 		return responseCategory;
 	}
-
-
-	public List<CategoryDTO> findAllCategoriesForUser(){
-		List<Category> AllCategories = categoryRepository.findByUser_id(3);
+	
+	public List<CategoryDTO> findAllCategoriesForUser(int userId){
+		List<Category> AllCategories = categoryRepository.findByUser_id(userId);
 		List<CategoryDTO> AllResponseCategories = AllCategories.stream().map(category -> mappingDTO(category)).collect(Collectors.toList());
 		return AllResponseCategories;
 	}

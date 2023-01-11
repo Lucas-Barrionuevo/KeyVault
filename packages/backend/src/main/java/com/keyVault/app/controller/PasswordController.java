@@ -63,12 +63,12 @@ public class PasswordController {
 	public ResponseEntity<?> createPassword(@Valid @RequestBody PasswordDTO passwordDTO, HttpServletRequest request){
 		TokenUtils tokenUtils = new TokenUtils();
 		int userId = tokenUtils.getIdByToken(request);
-		if (passwordDTO.getCategory() != null){
-			Optional<Category> enteredCategory = categoryRepository.findById(passwordDTO.getCategory().getId());
-			if(enteredCategory.isEmpty()){
+		if (passwordDTO.getCategoryName() != null){
+			Category enteredCategory = categoryRepository.findOneByNameAndUser_id(userId, passwordDTO.getCategoryName());
+			if(enteredCategory == null){
 				Category category = new Category();
 				category.setUser(passwordDTO.getUser());
-				category.setName("hola");
+				category.setName(passwordDTO.getCategoryName());
 				categoryRepository.save(category);
 				return new ResponseEntity<>(passwordService.createPassword(passwordDTO,userId),HttpStatus.CREATED);
 			}

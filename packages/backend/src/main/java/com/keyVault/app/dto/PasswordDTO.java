@@ -79,6 +79,14 @@ public class PasswordDTO {
 		return category;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
 	public void setCategory(Category category) {
 		this.category = category;
 	}
