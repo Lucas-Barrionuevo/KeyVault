@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/status")
+@RequestMapping
 public class Test {
-	@GetMapping
+	@GetMapping("/status")
 	public ResponseEntity<?> test(){
 		return ResponseEntity.ok("ON");
 	}

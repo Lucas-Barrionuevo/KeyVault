@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.keyVault.app.dto.UserDTO;
+import com.keyVault.app.dto.UserResponse;
 import com.keyVault.app.entity.User;
 import com.keyVault.app.repository.UserRepository;
 import com.keyVault.app.security.TokenUtils;
 import com.keyVault.app.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/user")
@@ -30,9 +32,15 @@ public class UserController {
 	@Autowired(required=false)
 	private TokenUtils tokenUtils;
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getUser(@PathVariable(name = "id") int id){
-		return ResponseEntity.ok(userService.findUserById(id));
+	@GetMapping()
+	public ResponseEntity<?> getUser(HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Optional<User> user = userRepository.findById(userId);
+		if (user.get().getEnabled() == false) {
+			return new ResponseEntity<>("The account does not exist", HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(userService.findUserById(userId));
 	}
 	
 	@PostMapping("/register")
@@ -42,27 +50,36 @@ public class UserController {
 		}
 		return new ResponseEntity<>(userService.registerUser(userDTO),HttpStatus.CREATED);
 	}
-	@PutMapping("/{id}")
-	public ResponseEntity<?> updateUser(@PathVariable (name="id")int id, @Valid @RequestBody UserDTO userDTO){
-		Optional<User> user = userRepository.findById(id);
-		if (user== null) {
-			return new ResponseEntity<>("the user with the entered id does not exist", HttpStatus.NOT_FOUND);
-		}
-		if (userDTO.getEnabled() == false) {
-			return new ResponseEntity<>("The account does not exist", HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(userService.updateUser(userDTO, id),HttpStatus.OK);
-	}
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable (name="id")int id){
-		Optional<User> user = userRepository.findById(id);
-		if (user ==null) {
-			return new ResponseEntity<>("the user with the entered id does not exist", HttpStatus.NOT_FOUND);
-		}
+	@PutMapping()
+	public ResponseEntity<?> updateUser(HttpServletRequest request, @Valid @RequestBody UserDTO userDTO){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Optional<User> user = userRepository.findById(userId);
 		if (user.get().getEnabled() == false) {
 			return new ResponseEntity<>("The account does not exist", HttpStatus.BAD_REQUEST);
 		}
-		userService.deleteUser(id);
+		return new ResponseEntity<>(userService.updateUser(userDTO, userId),HttpStatus.OK);
+	}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUser(HttpServletRequest request){
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Optional<User> user = userRepository.findById(userId);
+		if (user.get().getEnabled() == false) {
+			return new ResponseEntity<>("The account does not exist", HttpStatus.BAD_REQUEST);
+		}
+		userService.deleteUser(userId);
 		return new ResponseEntity<>("User removed successfully", HttpStatus.OK);
+	}
+	@GetMapping("/me")
+	public ResponseEntity<?> userResponse (HttpServletRequest request) {
+		TokenUtils tokenUtils = new TokenUtils();
+		int userId = tokenUtils.getIdByToken(request);
+		Optional<User> user = userRepository.findById(userId);
+		if (user.get().getEnabled() == false) {
+			return new ResponseEntity<>("The account does not exist", HttpStatus.BAD_REQUEST);
+		}
+		UserResponse userResponse = userService.findUserById(userId);
+		return new ResponseEntity<>(userResponse,HttpStatus.OK);
 	}
 }
