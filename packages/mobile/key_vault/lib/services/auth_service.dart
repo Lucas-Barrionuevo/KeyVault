@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:key_vault/models/models.dart';
 import 'package:key_vault/utils/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService extends ChangeNotifier {
   final String _baseUrl = "api-dev.keyvault.me";
   late final User user;
+  final storage = const FlutterSecureStorage();
   bool isLoading = false;
 
   Future<String?> register(String email, String password) async {
@@ -21,6 +23,9 @@ class AuthService extends ChangeNotifier {
       headers: {"Content-Type": "application/json"},
     );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
+    if (decodedResp["token"] != null) {
+      await storage.write(key: 'token', value: decodedResp['token']);
+    }
     user = decodedResp as User;
     isLoading = false;
     notifyListeners();
@@ -38,7 +43,6 @@ class AuthService extends ChangeNotifier {
       headers: {"Content-Type": "application/json"},
     );
     //TODO: error handle
-    print(resp.statusCode);
     if (!ServicesUtils.isOk(resp)) {
       isLoading = false;
       notifyListeners();
@@ -46,9 +50,15 @@ class AuthService extends ChangeNotifier {
     }
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
     user = User.fromJson(decodedResp);
-    print(user);
+    if (decodedResp["token"] != null) {
+      await storage.write(key: 'token', value: decodedResp['token']);
+    }
     isLoading = false;
     notifyListeners();
     return null;
+  }
+
+  Future<String> readToken() async {
+    return await storage.read(key: 'token') ?? '';
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:key_vault/providers/auth_provider.dart';
 
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/services/auth_service.dart';

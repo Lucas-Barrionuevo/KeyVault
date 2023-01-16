@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:key_vault/providers/password_form_provider.dart';
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
@@ -15,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: Column(
-        children: [_Header(), _SettingsForm()],
+        children: const [_Header(), _SettingsForm()],
       )),
     );
   }
