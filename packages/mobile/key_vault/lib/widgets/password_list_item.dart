@@ -36,7 +36,7 @@ class PasswordListItem extends StatelessWidget {
             builder: (BuildContext context) {
               return BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: BottomSheetModal());
+                  child: const BottomSheetModal());
             },
           );
         });

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/providers/auth_provider.dart';
+
+import 'package:key_vault/providers/providers.dart';
+import 'package:key_vault/services/auth_service.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 import 'package:key_vault/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,7 +25,9 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              const _LoginForm(),
+              ChangeNotifierProvider(
+                  create: (_) => LoginFormProvider(),
+                  child: const _LoginForm()),
               const SizedBox(
                 height: 25,
               ),
@@ -56,29 +63,43 @@ class _ForgotMyPasswordButton extends StatelessWidget {
 
 class _LoginForm extends StatelessWidget {
   const _LoginForm();
-
   @override
   Widget build(BuildContext context) {
+    final loginForm = Provider.of<LoginFormProvider>(context);
+    final authProvider = Provider.of<AuthService>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
+      key: loginForm.formKey,
       child: Form(
           child: Column(
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             cursorColor: AppTheme.primary,
+            autocorrect: false,
+            onChanged: (value) => loginForm.email = value,
             decoration:
                 InputDecorations.authInputDecoration(labelText: 'Email'),
           ),
           const SizedBox(
             height: 25,
           ),
-          const AuthPasswordInput(),
+          AuthPasswordInput(onChanged: (value) => loginForm.password = value),
           const SizedBox(
             height: 25,
           ),
-          const SubmitButton(
+          SubmitButton(
             title: "Iniciar sesión",
+            isLoading: authProvider.isLoading,
+            onPressed: authProvider.isLoading
+                ? null
+                : () async {
+                    final authService =
+                        Provider.of<AuthService>(context, listen: false);
+                    //TODO: error manage
+                    await authService.login(
+                        loginForm.email, loginForm.password);
+                  },
           )
         ],
       )),

@@ -169,7 +169,7 @@ class CategoryHeaderCard extends StatelessWidget {
             height: Sizes.scaleVertical * 1.2,
           ),
           const Text(
-            "CodeaIT",
+            "Trabajo",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           const SizedBox(

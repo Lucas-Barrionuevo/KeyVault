@@ -3,7 +3,8 @@ import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 
 class AuthPasswordInput extends StatefulWidget {
-  const AuthPasswordInput({super.key});
+  final void Function(String) onChanged;
+  const AuthPasswordInput({super.key, required this.onChanged});
 
   @override
   State<AuthPasswordInput> createState() => _AuthPasswordInputState();
@@ -17,6 +18,7 @@ class _AuthPasswordInputState extends State<AuthPasswordInput> {
       keyboardType: TextInputType.none,
       obscureText: passwordVisible,
       cursorColor: AppTheme.primary,
+      onChanged: widget.onChanged,
       decoration: InputDecorations.authInputDecoration(
           labelText: 'Contraseña',
           suffixIcon: IconButton(
