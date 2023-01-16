@@ -8,7 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService extends ChangeNotifier {
   final String _baseUrl = "api-dev.keyvault.me";
-  late final User user;
+  User? user;
   final storage = const FlutterSecureStorage();
   bool isLoading = false;
 
@@ -56,6 +56,12 @@ class AuthService extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
     return null;
+  }
+
+  Future logout() async {
+    await storage.delete(key: 'token');
+    user = null;
+    return;
   }
 
   Future<String> readToken() async {

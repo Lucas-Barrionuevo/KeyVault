@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:key_vault/providers/providers.dart';
+import 'package:key_vault/services/auth_service.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 import 'package:key_vault/utils/sizes.dart';
@@ -54,7 +55,12 @@ class _SettingsForm extends StatelessWidget {
           ),
           SizedBox(height: Sizes.scaleVertical * 5),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              final authService =
+                  Provider.of<AuthService>(context, listen: false);
+              authService.logout();
+              Navigator.pushReplacementNamed(context, 'login');
+            },
             child: const Text("Cerrar sesión"),
           ),
           SizedBox(height: Sizes.scaleVertical),

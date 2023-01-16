@@ -95,9 +95,16 @@ class _LoginForm extends StatelessWidget {
                 : () async {
                     final authService =
                         Provider.of<AuthService>(context, listen: false);
+                    final bottomNavProvider =
+                        Provider.of<BottomNavProvider>(context, listen: false);
                     //TODO: error manage
-                    await authService.login(
+                    final errorMessage = await authService.login(
                         loginForm.email, loginForm.password);
+                    if (errorMessage == null) {
+                      Navigator.pushReplacementNamed(
+                          context, 'main_bottom_nav_screen');
+                      bottomNavProvider.selectedMenuOpt = 0;
+                    }
                   },
           )
         ],

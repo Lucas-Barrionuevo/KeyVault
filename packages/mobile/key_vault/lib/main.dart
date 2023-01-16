@@ -32,11 +32,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
+        'checking': (context) => const CheckAuthScreen(),
         'login': (context) => const LoginScreen(),
         'main_bottom_nav_screen': (context) => const MainBottomNavScreen(),
         'add_password_screen': (context) => const AddPasswordScreen(),
       },
-      initialRoute: 'login',
+      initialRoute: 'checking',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lighTheme,
     );
