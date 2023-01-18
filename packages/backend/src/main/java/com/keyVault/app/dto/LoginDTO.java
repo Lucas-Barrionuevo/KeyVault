@@ -1,22 +1,25 @@
 package com.keyVault.app.dto;
-import java.util.Date;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 
-public class UserResponse {
+import java.util.Date;
+
+public class LoginDTO {
 	private int id;
 	private String email;
 	private Date createdAt;
+	private String token;
+	private Date expirationDate;
 	
-	public UserResponse() {
+	public LoginDTO() {
 		super();
 	}
 	
-	public UserResponse(int id,String email, Date createdAt) {
+	public LoginDTO(int id, String email, Date createdAt, String token, Date expirationDate) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.createdAt = createdAt;
+		this.token = token;
+		this.expirationDate = expirationDate;
 	}
 
 	public int getId() {
@@ -36,6 +39,22 @@ public class UserResponse {
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 	
 }

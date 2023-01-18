@@ -46,9 +46,12 @@ public class PasswordService {
 	private ModelMapper modelMapper;
 	
 	public PasswordResponse2 createPassword (PasswordDTO passwordDTO,int userId) {
+		System.out.println("paso");
 		Password password = mappingEntity(passwordDTO);
 		password.setCreatedAt(new Date());
-		password.setUser(userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", userId)));
+		if (password.getUser()!= null) {
+			password.setUser(userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", userId)));
+		}
 		if(password.getCategory()!=null) {
 			password.setCategory(categoryRepository.findById(password.getCategory().getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", password.getCategory().getId())));
 		}

@@ -20,8 +20,9 @@ public class Password {
 	private int id;
 	@Column(nullable = false)
 	private String content;
+	
 	private String name;
-	@Column(nullable = false)
+	
 	private String userOrMail;
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -31,7 +32,7 @@ public class Password {
 	@JoinColumn(name= "icon_id")
 	private Icon icon;
 	@ManyToOne(fetch = FetchType.LAZY )
-	@JoinColumn(name= "user_id", nullable=false)
+	@JoinColumn(name= "user_id")
 	private User user;
 	
 	private Date createdAt;

@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.keyVault.app.dto.LoginDTO;
 import com.keyVault.app.dto.TokenDTO;
 import com.keyVault.app.dto.UserDTO;
 import com.keyVault.app.dto.UserResponse;
@@ -33,6 +35,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	public final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
+	private final static long ACCESS_TOKEN_VALIDITY_SECONDS = 2_592_000L;
 	@Autowired
 	private UserService userService;
 	
@@ -60,24 +63,19 @@ public class JWTAtuthenticationFilter extends UsernamePasswordAuthenticationFilt
 		UserDetailsImpl userDetails = (UserDetailsImpl)authResult.getPrincipal();
 		int id= userDetails.getUser().getId();
 		String token = TokenUtils.createToken(id);
-		
 		Claims claims = Jwts.parserBuilder()
 				.setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
 				.build()
 				.parseClaimsJws(token)
 				.getBody();
-		Date expirationToken = claims.getExpiration();
-		Gson myGson = new Gson();
-		JsonObject tokenObj = new JsonObject();
-		tokenObj.addProperty("token", token);
-		tokenObj.addProperty("expirationDate", expirationToken.toString());
-		tokenObj.addProperty("email", myGson.toJson(userDetails.getUser().getEmail()));
-		tokenObj.addProperty("createdAt", myGson.toJson(userDetails.getUser().getCreatedAt()));
+		Date expirationDate = claims.getExpiration();
+		LoginDTO login = new LoginDTO(id, userDetails.getUsername(), userDetails.getUser().getCreatedAt(), token, expirationDate);
+		Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		String res = myGson.toJson(tokenObj);
-		out.print(res);
+		String jsonResponse = prettyGson.toJson(login);
+		out.print(jsonResponse);
 		out.flush();
 		
 		super.successfulAuthentication(request, response, chain, authResult);
