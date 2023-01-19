@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:key_vault/models/password.dart';
 import 'package:key_vault/services/password_service.dart';
-
 import 'package:key_vault/utils/sizes.dart';
 import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +34,7 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: Sizes.scaleVertical * 45,
+        height: Sizes.scaleVertical * 48,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black12, width: 2),
@@ -59,19 +57,25 @@ class _BottomSheetContent extends StatelessWidget {
         SizedBox(
           height: Sizes.scaleVertical * 3,
         ),
-        CircleAvatar(
-          radius: Sizes.scaleVertical * 3,
-          child: Icon(Icons.reddit, size: Sizes.scaleVertical * 5),
+        PasswordIcon(
+          password: password,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: Sizes.scaleHorizontal * 5,
+          ),
+          child: FittedBox(
+            child: Text(
+              password.userOrMail ?? "",
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+            ),
+          ),
         ),
         Text(
-          password.name,
-          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-        ),
-        Text(
-          timeago.format(DateTime.parse(password.createdAt),
-              locale: 'es', allowFromNow: true),
+          password.url ?? "asd",
           style: const TextStyle(
               fontSize: 17,
+              decoration: TextDecoration.underline,
               fontWeight: FontWeight.normal,
               color: Colors.black45),
         ),

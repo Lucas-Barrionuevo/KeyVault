@@ -1,3 +1,4 @@
+export 'package:key_vault/widgets/password_icon.dart';
 export 'package:key_vault/widgets/loading.dart';
 export 'package:key_vault/widgets/bottom_sheet_modal.dart';
 export 'package:key_vault/widgets/password_list_item.dart';
