@@ -20,9 +20,8 @@ public class Password {
 	private int id;
 	@Column(nullable = false)
 	private String content;
-	
+	@Column(nullable = false)
 	private String name;
-	
 	private String userOrMail;
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)

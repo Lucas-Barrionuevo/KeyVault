@@ -10,7 +10,7 @@ public class PasswordResponse2 {
 	private String name;
 	private String userOrMail;
 	private Date createdAt;
-	private int seenqty;//number of times password seen
+	private int seenQty;//number of times password seen
 	
 	private Category category;
 	
@@ -46,12 +46,12 @@ public class PasswordResponse2 {
 		this.createdAt = createdAt;
 	}
 
-	public int getSeenqty() {
-		return seenqty;
+	public int getSeenQty() {
+		return seenQty;
 	}
 
-	public void setSeenqty(int seenqty) {
-		this.seenqty = seenqty;
+	public void setSeenQty(int seenQty) {
+		this.seenQty = seenQty;
 	}
 
 	public Category getCategory() {

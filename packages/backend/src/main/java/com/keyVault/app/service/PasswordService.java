@@ -46,15 +46,8 @@ public class PasswordService {
 	private ModelMapper modelMapper;
 	
 	public PasswordResponse2 createPassword (PasswordDTO passwordDTO,int userId) {
-		System.out.println("paso");
 		Password password = mappingEntity(passwordDTO);
 		password.setCreatedAt(new Date());
-		if (password.getUser()!= null) {
-			password.setUser(userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Category", "id", userId)));
-		}
-		if(password.getCategory()!=null) {
-			password.setCategory(categoryRepository.findById(password.getCategory().getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", password.getCategory().getId())));
-		}
 		if (password.getIcon() != null) {
 			password.setIcon(iconRepository.findById(password.getIcon().getId()).orElseThrow(() -> new ResourceNotFoundException("Icon", "id", password.getIcon().getId())));
 		}
@@ -102,7 +95,7 @@ public class PasswordService {
 		passwordResponse2.setIcon(passwordDTO.getIcon());
 		passwordResponse2.setId(passwordDTO.getId());
 		passwordResponse2.setName(passwordDTO.getName());
-		passwordResponse2.setSeenqty(passwordDTO.getSeenqty());
+		passwordResponse2.setSeenQty(passwordDTO.getSeenQty());
 		passwordResponse2.setUrl(passwordDTO.getUrl());
 		passwordResponse2.setUserOrMail(passwordDTO.getUserOrMail());
 		return passwordResponse2;
@@ -115,7 +108,7 @@ public class PasswordService {
 		passwordResponse.setIcon(passwordDTO.getIcon());
 		passwordResponse.setId(passwordDTO.getId());
 		passwordResponse.setName(passwordDTO.getName());
-		passwordResponse.setSeenqty(passwordDTO.getSeenqty());
+		passwordResponse.setSeenQty(passwordDTO.getSeenQty());
 		passwordResponse.setUrl(passwordDTO.getUrl());
 		passwordResponse.setUserOrMail(passwordDTO.getUserOrMail());
 		return passwordResponse;

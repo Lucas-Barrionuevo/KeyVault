@@ -12,10 +12,11 @@ public class PasswordDTO {
 	@Size(min=2, message = "The password content must have at least 2 characters")
 	@Size(max=30, message = "The password content must be less than 30 characters")
 	private String content;
+	@NotEmpty
 	private String name;
 	private String userOrMail;
 	private Date createdAt;
-	private int seenqty;//number of times password seen
+	private int seenQty;//number of times password seen
 	
 	private String categoryName;
 	
@@ -63,12 +64,12 @@ public class PasswordDTO {
 		this.createdAt = createdAt;
 	}
 
-	public int getSeenqty() {
-		return seenqty;
+	public int getSeenQty() {
+		return seenQty;
 	}
 
-	public void setSeenqty(int seenqty) {
-		this.seenqty = seenqty;
+	public void setSeenQty(int seenQty) {
+		this.seenQty = seenQty;
 	}
 
 	public Category getCategory() {

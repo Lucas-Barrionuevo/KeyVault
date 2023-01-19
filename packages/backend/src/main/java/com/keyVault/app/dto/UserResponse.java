@@ -7,16 +7,32 @@ public class UserResponse {
 	private int id;
 	private String email;
 	private Date createdAt;
+	private String token;
+	private Date expirationDate;
 	
 	public UserResponse() {
 		super();
 	}
-	
-	public UserResponse(int id,String email, Date createdAt) {
+	public UserResponse(int id, String email, Date createdAt, String token, Date expirationDate) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.createdAt = createdAt;
+		this.token = token;
+		this.expirationDate = expirationDate;
+	}
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public int getId() {

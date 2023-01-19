@@ -1,4 +1,5 @@
 package com.keyVault.app.controller;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,25 +54,32 @@ public class PasswordController {
 	public ResponseEntity<?> getPassword (@PathVariable(name = "id") int id, HttpServletRequest request){
 		TokenUtils tokenUtils = new TokenUtils();
 		int userId = tokenUtils.getIdByToken(request);
+		System.out.println("aca1");
 		Password password = passwordRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Password", "id", id));
+		System.out.println("aca2");
 		if (password.getUser().getId() != userId) {
+			System.out.println("aca3");
 			return new ResponseEntity<>("The password indicated does not match the username", HttpStatus.NOT_FOUND);
 		}
+		System.out.println("aca4");
 		return ResponseEntity.ok(passwordService.findPasswordById(id));
 	}
 	@PostMapping
 	public ResponseEntity<?> createPassword(@Valid @RequestBody PasswordDTO passwordDTO, HttpServletRequest request){
 		TokenUtils tokenUtils = new TokenUtils();
 		int userId = tokenUtils.getIdByToken(request);
+		passwordDTO.setUser(userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId)));
 		if (passwordDTO.getCategoryName() != null){
-			Category enteredCategory = categoryRepository.findOneByNameAndUser_id(userId, passwordDTO.getCategoryName());
-			if(enteredCategory == null){
+			Optional<Category> enteredCategory = categoryRepository.findOneByUserIdAndName(userId, passwordDTO.getCategoryName());
+			if(enteredCategory.isEmpty()){
 				Category category = new Category();
 				category.setUser(passwordDTO.getUser());
 				category.setName(passwordDTO.getCategoryName());
 				categoryRepository.save(category);
+				passwordDTO.setCategory(category);
 				return new ResponseEntity<>(passwordService.createPassword(passwordDTO,userId),HttpStatus.CREATED);
 			}
+			passwordDTO.setCategory(enteredCategory.get());
 			return new ResponseEntity<>(passwordService.createPassword(passwordDTO,userId),HttpStatus.CREATED);
 		}
 		return new ResponseEntity<>(passwordService.createPassword(passwordDTO,userId),HttpStatus.CREATED);

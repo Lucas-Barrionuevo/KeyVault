@@ -9,8 +9,13 @@ import com.keyVault.app.dto.UserResponse;
 import com.keyVault.app.entity.User;
 import com.keyVault.app.exceptions.ResourceNotFoundException;
 import com.keyVault.app.repository.UserRepository;
+import com.keyVault.app.security.TokenUtils;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 @Service
 public class UserService {
+	public final static String ACCESS_TOKEN_SECRET = "$10$tTpH1I6caxJcn6uS.zWab.jiWcCQRp5SqklTezw2JUy21w3wBDRo";
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -24,8 +29,18 @@ public class UserService {
 		user.setCreatedAt(new Date());
 		user.setEnabled(true);
 		User newUser = userRepository.save(user);
+		String token = TokenUtils.createToken(newUser.getId());
+		Claims claims = Jwts.parserBuilder()
+				.setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+				.build()
+				.parseClaimsJws(token)
+				.getBody();
+		Date expirationDate = claims.getExpiration();
+		System.out.println(expirationDate);
 		UserDTO userDTO2 = mappingDTO(newUser);
 		UserResponse responseUser = mappingResponse(userDTO2);
+		responseUser.setToken(token);
+		responseUser.setExpirationDate(expirationDate);
 		return responseUser;
 	}
 	
