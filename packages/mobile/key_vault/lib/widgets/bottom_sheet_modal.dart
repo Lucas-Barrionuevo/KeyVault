@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/models/password.dart';
+import 'package:key_vault/services/password_service.dart';
+
 import 'package:key_vault/utils/sizes.dart';
 import 'package:key_vault/widgets/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class BottomSheetModal extends StatelessWidget {
   const BottomSheetModal({
@@ -10,6 +15,26 @@ class BottomSheetModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Sizes(context);
+
+    final password = Provider.of<PasswordService>(context, listen: false);
+    return FutureBuilder(
+        future: password.loadPassword("2"),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const _Content();
+          } else {
+            return const _Content(isLoading: true);
+          }
+        });
+  }
+}
+
+class _Content extends StatelessWidget {
+  final bool isLoading;
+  const _Content({Key? key, this.isLoading = false}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
         height: Sizes.scaleVertical * 45,
         decoration: BoxDecoration(
@@ -17,62 +42,74 @@ class BottomSheetModal extends StatelessWidget {
           border: Border.all(color: Colors.black12, width: 2),
           color: Colors.white,
         ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: Sizes.scaleVertical * 3,
-            ),
-            CircleAvatar(
-              radius: Sizes.scaleVertical * 3,
-              child: Icon(Icons.reddit, size: Sizes.scaleVertical * 5),
-            ),
-            const Text(
-              "Probando",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-            ),
-            const Text(
-              "Agregada hace 5 min",
-              style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black45),
-            ),
-            SizedBox(
-              height: Sizes.scaleVertical * 2,
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 3),
-              child: Container(
-                width: double.infinity,
-                height: Sizes.scaleVertical * 8,
-                padding: EdgeInsets.symmetric(
-                    vertical: Sizes.scaleVertical,
-                    horizontal: Sizes.scaleHorizontal * 5),
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(0, 0, 0, 0.05),
-                    borderRadius: BorderRadius.circular(10)),
-                child: const FittedBox(
-                  child: Text(
-                    "Esta es mi contraseña",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                  ),
-                ),
+        child: isLoading ? const Loading() : const _BottomSheetContent());
+  }
+}
+
+class _BottomSheetContent extends StatelessWidget {
+  const _BottomSheetContent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final password = Provider.of<PasswordService>(context).selectedPassword;
+    return Column(
+      children: [
+        SizedBox(
+          height: Sizes.scaleVertical * 3,
+        ),
+        CircleAvatar(
+          radius: Sizes.scaleVertical * 3,
+          child: Icon(Icons.reddit, size: Sizes.scaleVertical * 5),
+        ),
+        Text(
+          password.name,
+          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+        ),
+        Text(
+          timeago.format(DateTime.parse(password.createdAt),
+              locale: 'es', allowFromNow: true),
+          style: const TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.normal,
+              color: Colors.black45),
+        ),
+        SizedBox(
+          height: Sizes.scaleVertical * 2,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 3),
+          child: Container(
+            width: double.infinity,
+            height: Sizes.scaleVertical * 8,
+            padding: EdgeInsets.symmetric(
+                vertical: Sizes.scaleVertical,
+                horizontal: Sizes.scaleHorizontal * 5),
+            decoration: BoxDecoration(
+                color: const Color.fromRGBO(0, 0, 0, 0.05),
+                borderRadius: BorderRadius.circular(10)),
+            child: FittedBox(
+              child: Text(
+                password.content ?? "",
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
-            SizedBox(
-              height: Sizes.scaleVertical * 2,
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 20),
-              child: const SubmitButton(title: "Copiar"),
-            ),
-            SizedBox(
-              height: Sizes.scaleVertical,
-            ),
-            TextButton(onPressed: () {}, child: const Text("Eliminar"))
-          ],
-        ));
+          ),
+        ),
+        SizedBox(
+          height: Sizes.scaleVertical * 2,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 20),
+          child: const SubmitButton(title: "Copiar"),
+        ),
+        SizedBox(
+          height: Sizes.scaleVertical,
+        ),
+        TextButton(onPressed: () {}, child: const Text("Eliminar"))
+      ],
+    );
   }
 }
