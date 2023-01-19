@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:key_vault/services/services.dart';
 
 import 'package:key_vault/utils/sizes.dart';
 
 import 'package:key_vault/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final passwords = Provider.of<PasswordService>(context);
+    final isEmpty = passwords.passwords.isEmpty;
+    final isLoading = passwords.isLoading;
+
     Sizes(context);
     return Scaffold(
         backgroundColor: Colors.white,
@@ -20,7 +27,7 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: Sizes.scaleVertical * 4,
               ),
-              const _PasswordList(),
+              isLoading ? const Loading() : _PasswordList(isEmpty: isEmpty),
             ],
           ),
         ));
@@ -28,29 +35,69 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _PasswordList extends StatelessWidget {
+  final bool isEmpty;
+  final assetName = "assets/empty-state-illustration.svg";
   const _PasswordList({
     Key? key,
+    required this.isEmpty,
   }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final passwords = Provider.of<PasswordService>(context);
+    return isEmpty
+        ? _EmptyPasswordList(assetName: assetName)
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ListTitle(text: "Agregadas recientemente"),
+              ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                    horizontal: Sizes.scaleHorizontal * 5,
+                    vertical: Sizes.scaleVertical * 1.5),
+                shrinkWrap: true,
+                separatorBuilder: (context, index) => SizedBox(
+                  height: Sizes.scaleVertical,
+                ),
+                itemBuilder: (context, index) => PasswordListItem(
+                  password: passwords.passwords[index],
+                ),
+                itemCount: passwords.passwords.length,
+              )
+            ],
+          );
+  }
+}
+
+class _EmptyPasswordList extends StatelessWidget {
+  const _EmptyPasswordList({
+    Key? key,
+    required this.assetName,
+  }) : super(key: key);
+
+  final String assetName;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const ListTitle(text: "Agregadas recientemente"),
-        ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-              horizontal: Sizes.scaleHorizontal * 5,
-              vertical: Sizes.scaleVertical * 1.5),
-          shrinkWrap: true,
-          separatorBuilder: (context, index) => SizedBox(
-            height: Sizes.scaleVertical,
+    return Padding(
+      padding: EdgeInsets.only(top: Sizes.scaleVertical * 3),
+      child: Column(children: [
+        SvgPicture.asset(
+          assetName,
+          height: Sizes.scaleVertical * 30,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Opacity(
+            opacity: 0.3,
+            child: Text(
+              "Todavía no guardaste ninguna contraseña",
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            ),
           ),
-          itemBuilder: (context, index) => const PasswordListItem(),
-          itemCount: 10,
-        )
-      ],
+        ),
+      ]),
     );
   }
 }
@@ -83,9 +130,9 @@ class _Header extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  CategoryHeaderCard(),
-                  CategoryHeaderCard(),
-                  CategoryHeaderCard(),
+                  // CategoryHeaderCard(),
+                  // CategoryHeaderCard(),
+                  // CategoryHeaderCard(),
                 ],
               ),
             ],

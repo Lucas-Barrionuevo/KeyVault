@@ -9,7 +9,7 @@ class Password {
   Password({
     required this.id,
     required this.content,
-    this.name,
+    required this.name,
     this.userOrMail,
     required this.createdAt,
     required this.seenQty,
@@ -19,10 +19,10 @@ class Password {
   });
 
   int id;
-  String content;
+  String? content;
   String createdAt;
   int seenQty;
-  String? name;
+  String name;
   String? userOrMail;
   Category? category;
   Icon? icon;
@@ -31,12 +31,14 @@ class Password {
   factory Password.fromJson(Map<String, dynamic> json) => Password(
         id: json["id"],
         content: json["content"],
-        name: json["name"],
+        name: json["name"] ?? "No-Name",
         userOrMail: json["userOrMail"],
         createdAt: json["createdAt"],
-        seenQty: json["seenQty"],
-        category: Category.fromJson(json["category"]),
-        icon: Icon.fromJson(json["icon"]),
+        seenQty: json["seenqty"],
+        category: json["category"] != null
+            ? Category.fromJson(json["category"])
+            : null,
+        icon: json["icon"] != null ? Icon.fromJson(json["icon"]) : null,
         url: json["url"],
       );
 

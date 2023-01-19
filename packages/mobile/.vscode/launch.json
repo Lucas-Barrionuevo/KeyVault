@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "key_vault",
+            "cwd": "key_vault",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "key_vault (profile mode)",
+            "cwd": "key_vault",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "key_vault (release mode)",
+            "cwd": "key_vault",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

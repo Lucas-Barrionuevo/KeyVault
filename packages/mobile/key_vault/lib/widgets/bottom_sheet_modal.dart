@@ -13,7 +13,7 @@ class BottomSheetModal extends StatelessWidget {
     return Container(
         height: Sizes.scaleVertical * 45,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(30),
           border: Border.all(color: Colors.black12, width: 2),
           color: Colors.white,
         ),

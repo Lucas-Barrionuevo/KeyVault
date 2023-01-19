@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:key_vault/screens/screens.dart';
 import 'package:key_vault/services/services.dart';
-import 'package:key_vault/theme/app_theme.dart';
+import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class CheckAuthScreen extends StatelessWidget {
@@ -18,11 +18,7 @@ class CheckAuthScreen extends StatelessWidget {
           future: authService.readToken(),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppTheme.primary,
-                ),
-              );
+              return const Loading();
             }
 
             if (snapshot.data == '') {
