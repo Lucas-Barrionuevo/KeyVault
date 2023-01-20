@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class BottomSheetModal extends StatelessWidget {
+  final String id;
   const BottomSheetModal({
     Key? key,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class BottomSheetModal extends StatelessWidget {
 
     final password = Provider.of<PasswordService>(context, listen: false);
     return FutureBuilder(
-        future: password.loadPassword("2"),
+        future: password.loadPassword(id),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return const _Content();
@@ -73,6 +75,9 @@ class _BottomSheetContent extends StatelessWidget {
         ),
         Text(
           password.url ?? "asd",
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
               fontSize: 17,
               decoration: TextDecoration.underline,

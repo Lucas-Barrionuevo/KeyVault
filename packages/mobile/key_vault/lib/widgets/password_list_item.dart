@@ -31,7 +31,7 @@ class PasswordListItem extends StatelessWidget {
         ),
         leading: PasswordIcon(password: password),
         tileColor: Colors.white,
-        onTap: () async {
+        onTap: () {
           showModalBottomSheet<void>(
             context: context,
             barrierColor: Colors.transparent,
@@ -40,7 +40,7 @@ class PasswordListItem extends StatelessWidget {
             builder: (BuildContext context) {
               return BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: const BottomSheetModal());
+                  child: BottomSheetModal(id: '${password.id}'));
             },
           );
         });

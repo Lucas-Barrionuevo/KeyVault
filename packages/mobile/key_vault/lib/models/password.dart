@@ -28,6 +28,9 @@ class Password {
   Icon? icon;
   String? url;
 
+  @override
+  String toString() => name;
+
   factory Password.fromJson(Map<String, dynamic> json) => Password(
         id: json["id"],
         content: json["content"],
