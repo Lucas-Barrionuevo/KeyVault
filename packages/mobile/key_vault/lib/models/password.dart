@@ -8,7 +8,7 @@ String passwordToJson(Password data) => json.encode(data.toJson());
 class Password {
   Password({
     required this.id,
-    required this.content,
+    this.content,
     required this.name,
     this.userOrMail,
     required this.createdAt,
@@ -37,7 +37,7 @@ class Password {
         name: json["name"] ?? "No-Name",
         userOrMail: json["userOrMail"],
         createdAt: json["createdAt"],
-        seenQty: json["seenqty"],
+        seenQty: json["seenQty"],
         category: json["category"] != null
             ? Category.fromJson(json["category"])
             : null,

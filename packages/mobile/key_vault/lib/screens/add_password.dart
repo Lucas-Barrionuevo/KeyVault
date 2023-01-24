@@ -31,9 +31,12 @@ class AddPasswordScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          passwordForm.isValidForm();
-          await passwordForm.createPassword(context);
-          goBack();
+          final isValid = passwordForm.isValidForm();
+          if (isValid) {
+            final error = await passwordForm.createPassword(context);
+            if (error == null) goBack();
+            //TODO: SNACKBAR
+          }
         },
         backgroundColor: AppTheme.primary,
         child: const Icon(Icons.save),

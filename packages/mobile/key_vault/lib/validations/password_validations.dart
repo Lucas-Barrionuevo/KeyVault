@@ -30,7 +30,10 @@ class PasswordValidations {
   }
 
   static password(value) {
-    if (value != null && value.length > passwordMaxLength) {
+    if (value == "") {
+      return "La contraseña es requerida";
+    }
+    if (value.length > passwordMaxLength) {
       return "Máximo $passwordMaxLength caracteres";
     }
     return null;

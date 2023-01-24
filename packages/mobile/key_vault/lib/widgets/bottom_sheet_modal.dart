@@ -65,15 +65,16 @@ class _BottomSheetContent extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: Sizes.scaleHorizontal * 5,
           ),
-          child: FittedBox(
-            child: Text(
-              password.userOrMail ?? "",
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-            ),
-          ),
         ),
         Text(
-          password.url ?? "asd",
+          password.userOrMail ?? "",
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 17, color: Colors.black45),
+        ),
+        Text(
+          password.url ?? "",
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

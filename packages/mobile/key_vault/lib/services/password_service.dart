@@ -47,7 +47,7 @@ class PasswordService extends ChangeNotifier {
     return passwords;
   }
 
-  Future<Password> createPassword(
+  Future<String?> createPassword(
       String content, String name, String userOrMail, String url) async {
     isLoading = true;
     notifyListeners();
@@ -64,11 +64,14 @@ class PasswordService extends ChangeNotifier {
           'userOrMail': userOrMail,
           'url': url,
         }));
+    if (resp.statusCode != 200 && resp.statusCode != 201) {
+      return 'Error';
+    }
     final decodedBody = json.decode(resp.body);
     final password = Password.fromJson(decodedBody);
     passwords.add(password);
     isLoading = false;
     notifyListeners();
-    return password;
+    return null;
   }
 }
