@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:key_vault/services/password_service.dart';
 import 'package:key_vault/utils/sizes.dart';
 import 'package:key_vault/widgets/widgets.dart';
@@ -112,7 +113,13 @@ class _BottomSheetContent extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 20),
-          child: const SubmitButton(title: "Copiar"),
+          child: SubmitButton(
+            title: "Copiar",
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: password.content));
+              //TODO: Snackbar
+            },
+          ),
         ),
         SizedBox(
           height: Sizes.scaleVertical,
