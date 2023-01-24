@@ -3,7 +3,6 @@ import 'package:key_vault/services/password_service.dart';
 import 'package:key_vault/utils/sizes.dart';
 import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class BottomSheetModal extends StatelessWidget {
   final String id;

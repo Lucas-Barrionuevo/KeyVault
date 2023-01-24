@@ -1,11 +1,11 @@
 class Category {
   Category({
-    required this.id,
+    this.id,
     required this.name,
     this.preview,
   });
 
-  int id;
+  int? id;
   String name;
   String? preview;
 

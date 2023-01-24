@@ -101,6 +101,7 @@ class _LoginForm extends StatelessWidget {
                     final errorMessage = await authService.login(
                         loginForm.email, loginForm.password);
                     if (errorMessage == null) {
+                      // ignore: use_build_context_synchronously
                       Navigator.pushReplacementNamed(
                           context, 'main_bottom_nav_screen');
                       bottomNavProvider.selectedMenuOpt = 0;

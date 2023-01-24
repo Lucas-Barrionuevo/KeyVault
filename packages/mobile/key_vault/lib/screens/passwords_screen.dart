@@ -55,9 +55,11 @@ class PasswordsScreen extends StatelessWidget {
             children: [
               const _SearchBar(),
               Expanded(
-                child: PasswordsList(
-                  isEmpty: passwordsList.passwords.isEmpty,
-                  passwords: pws,
+                child: SingleChildScrollView(
+                  child: PasswordsList(
+                    isEmpty: passwordsList.passwords.isEmpty,
+                    passwords: pws,
+                  ),
                 ),
               ),
             ],

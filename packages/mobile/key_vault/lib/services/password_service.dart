@@ -46,4 +46,29 @@ class PasswordService extends ChangeNotifier {
     notifyListeners();
     return passwords;
   }
+
+  Future<Password> createPassword(
+      String content, String name, String userOrMail, String url) async {
+    isLoading = true;
+    notifyListeners();
+    final token = await storage.read(key: 'token') ?? '';
+    final apiUrl = Uri.https(_baseUrl, '/password');
+    final resp = await http.post(apiUrl,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'content': content,
+          'name': name,
+          'userOrMail': userOrMail,
+          'url': url,
+        }));
+    final decodedBody = json.decode(resp.body);
+    final password = Password.fromJson(decodedBody);
+    passwords.add(password);
+    isLoading = false;
+    notifyListeners();
+    return password;
+  }
 }

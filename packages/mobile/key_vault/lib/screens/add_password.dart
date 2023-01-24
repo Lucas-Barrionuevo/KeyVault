@@ -20,14 +20,20 @@ class AddPasswordScreen extends StatelessWidget {
         Platform.isAndroid ? Sizes.scaleVertical * 12 : Sizes.scaleVertical * 8;
     final passwordForm = Provider.of<PasswordFormProvider>(context);
 
+    goBack() {
+      Navigator.pop(context);
+    }
+
     Sizes(context);
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           passwordForm.isValidForm();
+          await passwordForm.createPassword(context);
+          goBack();
         },
         backgroundColor: AppTheme.primary,
         child: const Icon(Icons.save),
@@ -83,6 +89,14 @@ class _PasswordForm extends StatelessWidget {
             decoration: InputDecorations.formDecoration(
                 hintText: "Facebook", label: "Nombre")),
         SizedBox(height: Sizes.scaleVertical * 3),
+        AutocompleteInput(
+          label: "Categoría",
+          hintText: "Trabajo",
+          onSelected: (String selected) {
+            passwordForm.category = selected;
+          },
+        ),
+        SizedBox(height: Sizes.scaleVertical * 3),
         TextFormField(
             autocorrect: false,
             cursorColor: AppTheme.primary,
@@ -108,13 +122,6 @@ class _PasswordForm extends StatelessWidget {
             decoration: InputDecorations.formDecoration(
                 hintText: "1234", label: "Contraseña")),
         SizedBox(height: Sizes.scaleVertical * 3),
-        AutocompleteInput(
-          label: "Categoría",
-          hintText: "Trabajo",
-          onSelected: (String selected) {
-            passwordForm.category = selected;
-          },
-        ),
       ]),
     );
   }

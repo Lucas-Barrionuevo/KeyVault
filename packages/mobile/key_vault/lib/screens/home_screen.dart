@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:key_vault/services/services.dart';
 
 import 'package:key_vault/utils/sizes.dart';
