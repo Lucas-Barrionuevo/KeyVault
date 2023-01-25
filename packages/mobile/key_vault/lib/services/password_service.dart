@@ -74,4 +74,20 @@ class PasswordService extends ChangeNotifier {
     notifyListeners();
     return null;
   }
+
+  Future<String?> deletePassword(String id) async {
+    final token = await storage.read(key: 'token') ?? '';
+    final apiUrl = Uri.https(_baseUrl, '/password/$id');
+    final resp = await http.delete(apiUrl, headers: {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    });
+
+    passwords.removeWhere((element) => '${element.id}' == id);
+    notifyListeners();
+    if (resp.statusCode != 200 && resp.statusCode != 201) {
+      return 'Error';
+    }
+    return null;
+  }
 }

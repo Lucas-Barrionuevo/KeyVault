@@ -54,78 +54,101 @@ class _BottomSheetContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final password = Provider.of<PasswordService>(context).selectedPassword;
-    return Column(
-      children: [
-        SizedBox(
-          height: Sizes.scaleVertical * 3,
-        ),
-        PasswordIcon(
-          password: password,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Sizes.scaleHorizontal * 5,
+    goBack() {
+      Navigator.of(context).pop();
+    }
+
+    return Stack(children: [
+      Column(
+        children: [
+          SizedBox(
+            height: Sizes.scaleVertical * 3,
           ),
-        ),
-        Text(
-          password.userOrMail ?? "",
-          textAlign: TextAlign.center,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 17, color: Colors.black45),
-        ),
-        Text(
-          password.url ?? "",
-          textAlign: TextAlign.center,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-              fontSize: 17,
-              decoration: TextDecoration.underline,
-              fontWeight: FontWeight.normal,
-              color: Colors.black45),
-        ),
-        SizedBox(
-          height: Sizes.scaleVertical * 2,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 3),
-          child: Container(
-            width: double.infinity,
-            height: Sizes.scaleVertical * 8,
+          PasswordIcon(
+            password: password,
+          ),
+          Padding(
             padding: EdgeInsets.symmetric(
-                vertical: Sizes.scaleVertical,
-                horizontal: Sizes.scaleHorizontal * 5),
-            decoration: BoxDecoration(
-                color: const Color.fromRGBO(0, 0, 0, 0.05),
-                borderRadius: BorderRadius.circular(10)),
-            child: FittedBox(
-              child: Text(
-                password.content ?? "",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              horizontal: Sizes.scaleHorizontal * 5,
+            ),
+          ),
+          Text(
+            password.userOrMail ?? "",
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 17, color: Colors.black45),
+          ),
+          Text(
+            password.url ?? "",
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+                fontSize: 17,
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.normal,
+                color: Colors.black45),
+          ),
+          SizedBox(
+            height: Sizes.scaleVertical * 2,
+          ),
+          Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 3),
+            child: Container(
+              width: double.infinity,
+              height: Sizes.scaleVertical * 8,
+              padding: EdgeInsets.symmetric(
+                  vertical: Sizes.scaleVertical,
+                  horizontal: Sizes.scaleHorizontal * 5),
+              decoration: BoxDecoration(
+                  color: const Color.fromRGBO(0, 0, 0, 0.05),
+                  borderRadius: BorderRadius.circular(10)),
+              child: FittedBox(
+                child: Text(
+                  password.content ?? "",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 30),
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: Sizes.scaleVertical * 2,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 20),
-          child: SubmitButton(
-            title: "Copiar",
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: password.content));
-              //TODO: Snackbar
-            },
+          SizedBox(
+            height: Sizes.scaleVertical * 2,
           ),
-        ),
-        SizedBox(
-          height: Sizes.scaleVertical,
-        ),
-        TextButton(onPressed: () {}, child: const Text("Eliminar"))
-      ],
-    );
+          Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 20),
+            child: SubmitButton(
+              title: "Copiar",
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: password.content));
+                //TODO: Snackbar
+              },
+            ),
+          ),
+          SizedBox(
+            height: Sizes.scaleVertical,
+          ),
+        ],
+      ),
+      Positioned(
+          right: Sizes.scaleHorizontal * 5,
+          top: Sizes.scaleVertical * 2,
+          child: GestureDetector(
+            onTap: () async {
+              final error =
+                  await Provider.of<PasswordService>(context, listen: false)
+                      .deletePassword('${password.id}');
+              if (error == null) goBack();
+            },
+            child: Icon(
+              size: Sizes.scaleVertical * 3.5,
+              Icons.delete_forever,
+              color: Colors.red.withAlpha(200),
+            ),
+          ))
+    ]);
   }
 }
