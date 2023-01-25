@@ -6,7 +6,6 @@ import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 import 'package:key_vault/utils/sizes.dart';
 import 'package:key_vault/validations/password_validations.dart';
-import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class AddPasswordScreen extends StatelessWidget {
