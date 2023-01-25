@@ -25,6 +25,6 @@ class PasswordFormProvider extends ChangeNotifier {
 
   Future<String?> createPassword(BuildContext context) async {
     return Provider.of<PasswordService>(context, listen: false)
-        .createPassword(password, name, username, url);
+        .createPassword(password, name, username, url, category);
   }
 }

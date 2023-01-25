@@ -47,8 +47,8 @@ class PasswordService extends ChangeNotifier {
     return passwords;
   }
 
-  Future<String?> createPassword(
-      String content, String name, String userOrMail, String url) async {
+  Future<String?> createPassword(String content, String name, String userOrMail,
+      String url, String? category) async {
     isLoading = true;
     notifyListeners();
     final token = await storage.read(key: 'token') ?? '';
@@ -63,6 +63,7 @@ class PasswordService extends ChangeNotifier {
           'name': name,
           'userOrMail': userOrMail,
           'url': url,
+          'categoryName': category,
         }));
     if (resp.statusCode != 200 && resp.statusCode != 201) {
       return 'Error';
