@@ -92,14 +92,14 @@ class _PasswordForm extends StatelessWidget {
             decoration: InputDecorations.formDecoration(
                 hintText: "Facebook", label: "Nombre")),
         SizedBox(height: Sizes.scaleVertical * 3),
-        AutocompleteInput(
-          label: "Categoría",
-          hintText: "Trabajo",
-          onSelected: (String selected) {
-            passwordForm.category = selected;
-          },
-        ),
-        SizedBox(height: Sizes.scaleVertical * 3),
+        // AutocompleteInput(
+        //   label: "Categoría",
+        //   hintText: "Trabajo",
+        //   onSelected: (String selected) {
+        //     passwordForm.category = selected;
+        //   },
+        // ),
+        // SizedBox(height: Sizes.scaleVertical * 3),
         TextFormField(
             autocorrect: false,
             cursorColor: AppTheme.primary,

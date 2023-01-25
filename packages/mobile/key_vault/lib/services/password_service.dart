@@ -18,13 +18,13 @@ class PasswordService extends ChangeNotifier {
 
   Future<Password> loadPassword(String id) async {
     final token = await storage.read(key: 'token') ?? '';
-    final url = Uri.https(_baseUrl, '/password/$id', {
-      'Content-Type': 'application/json',
-    });
+    final url = Uri.https(_baseUrl, '/password/$id',
+        {'Content-Type': 'application/json', 'charset': 'utf-8'});
     final resp = await http.get(url, headers: {
       'Authorization': 'Bearer $token',
     });
-    final decodedBody = json.decode(resp.body);
+    final decodedBody =
+        json.decode(utf8.decode(resp.bodyBytes, allowMalformed: true));
     selectedPassword = Password.fromJson(decodedBody);
     notifyListeners();
     return selectedPassword;
@@ -34,13 +34,17 @@ class PasswordService extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     final token = await storage.read(key: 'token') ?? '';
-    final url = Uri.https(_baseUrl, '/password', {
-      'Content-Type': 'application/json',
-    });
+    final url = Uri.https(
+      _baseUrl,
+      '/password',
+    );
     final resp = await http.get(url, headers: {
       'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
     });
-    final List<dynamic> decodedBody = json.decode(resp.body);
+
+    final List<dynamic> decodedBody =
+        json.decode(utf8.decode(resp.bodyBytes, allowMalformed: true));
     passwords = decodedBody.map((e) => Password.fromJson(e)).toList();
     isLoading = false;
     notifyListeners();
@@ -68,7 +72,8 @@ class PasswordService extends ChangeNotifier {
     if (resp.statusCode != 200 && resp.statusCode != 201) {
       return 'Error';
     }
-    final decodedBody = json.decode(resp.body);
+    final decodedBody =
+        json.decode(utf8.decode(resp.bodyBytes, allowMalformed: true));
     final password = Password.fromJson(decodedBody);
     passwords.add(password);
     isLoading = false;
