@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:key_vault/services/services.dart';
+import 'package:key_vault/theme/app_theme.dart';
 
 import 'package:key_vault/utils/sizes.dart';
 
@@ -110,13 +112,20 @@ class _Head extends StatelessWidget {
   const _Head({
     Key? key,
   }) : super(key: key);
-
+  final assetName = "assets/logo.svg";
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: Sizes.scaleVertical * 2),
-      child: const CircleAvatar(
-        child: Icon(Icons.access_alarm),
+      child: CircleAvatar(
+        backgroundColor: AppTheme.primary,
+        child: Padding(
+          padding: EdgeInsets.all(Sizes.scaleVertical * 0.9),
+          child: SvgPicture.asset(
+            assetName,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:key_vault/providers/auth_provider.dart';
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/services/auth_service.dart';
@@ -82,6 +83,7 @@ class _Header extends StatelessWidget {
   const _Header({
     Key? key,
   }) : super(key: key);
+  final assetName = "assets/logo.svg";
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +102,15 @@ class _Header extends StatelessWidget {
         Positioned(
           bottom: -Sizes.scaleVertical * 5,
           child: CircleAvatar(
+            backgroundColor: AppTheme.primary,
             radius: Sizes.scaleVertical * 5,
-            child: Icon(Icons.abc, size: Sizes.scaleVertical * 8),
+            child: Padding(
+              padding: EdgeInsets.all(Sizes.scaleVertical * 1.8),
+              child: SvgPicture.asset(
+                assetName,
+                color: Colors.white,
+              ),
+            ),
           ),
         )
       ],
