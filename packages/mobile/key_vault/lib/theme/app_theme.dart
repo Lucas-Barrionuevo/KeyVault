@@ -4,6 +4,7 @@ class AppTheme {
   static const Color primary = Color(0xffF0C029);
   static final ThemeData lighTheme = ThemeData.light().copyWith(
       primaryColor: primary,
+      canvasColor: Colors.white,
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
             backgroundColor: Colors.transparent, foregroundColor: primary),

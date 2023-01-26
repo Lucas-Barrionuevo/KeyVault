@@ -46,7 +46,7 @@ class PasswordsScreen extends StatelessWidget {
         create: (_) => PasswordListProvider(),
         child: Builder(builder: (context) {
           final passwordsService =
-              Provider.of<PasswordService>(context, listen: false).passwords;
+              Provider.of<PasswordService>(context).passwords;
           final passwordsList = Provider.of<PasswordListProvider>(context);
           passwordsList.setPasswords(passwordsService);
           final pws = passwordsList.passwords;
