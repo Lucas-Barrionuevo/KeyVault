@@ -13,30 +13,17 @@ class CheckAuthScreen extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-        child: FutureBuilder(
-          future: authService.readToken(),
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        child: FutureBuilder<bool>(
+          future: authService.loginWithToken(),
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
             if (!snapshot.hasData) {
               return const Loading();
             }
-
-            if (snapshot.data == '') {
-              Future.microtask(() {
-                Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => const LoginScreen(),
-                        transitionDuration: const Duration(seconds: 0)));
-              });
+            final isAuthorized = snapshot.data;
+            if (isAuthorized == false) {
+              unauthorizedRedirect(context);
             } else {
-              Future.microtask(() {
-                Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                        pageBuilder: (_, __, ___) =>
-                            const MainBottomNavScreen(),
-                        transitionDuration: const Duration(seconds: 0)));
-              });
+              authorizedRedirect(context);
             }
 
             return Container();
@@ -44,5 +31,25 @@ class CheckAuthScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> authorizedRedirect(BuildContext context) {
+    return Future.microtask(() {
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (_, __, ___) => const MainBottomNavScreen(),
+              transitionDuration: const Duration(seconds: 0)));
+    });
+  }
+
+  Future<void> unauthorizedRedirect(BuildContext context) {
+    return Future.microtask(() {
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (_, __, ___) => const LoginScreen(),
+              transitionDuration: const Duration(seconds: 0)));
+    });
   }
 }

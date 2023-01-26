@@ -64,6 +64,25 @@ class AuthService extends ChangeNotifier {
     return;
   }
 
+  Future<bool> loginWithToken() async {
+    final token = await readToken();
+    if (token == "") return false;
+    final apiUrl = Uri.https(_baseUrl, '/user/me');
+    final resp = await http.get(
+      apiUrl,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (!ServicesUtils.isOk(resp)) return false;
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);
+    user = User.fromJson(decodedResp);
+    if (decodedResp["token"] != null) {
+      await storage.write(key: 'token', value: decodedResp['token']);
+    }
+    return true;
+  }
+
   Future<String> readToken() async {
     return await storage.read(key: 'token') ?? '';
   }

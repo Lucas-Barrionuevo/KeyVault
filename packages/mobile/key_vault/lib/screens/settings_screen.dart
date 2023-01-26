@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:key_vault/providers/auth_provider.dart';
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/services/auth_service.dart';
 import 'package:key_vault/theme/app_theme.dart';
@@ -13,10 +14,9 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Sizes(context);
     return Scaffold(
-      body: Center(
-          child: Column(
-        children: const [_Header(), _SettingsForm()],
-      )),
+      body: Column(
+        children: const [_Header(), Expanded(child: _SettingsForm())],
+      ),
     );
   }
 }
@@ -28,47 +28,51 @@ class _SettingsForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsForm = Provider.of<SettingsFormProvider>(context);
+    final userProvider = Provider.of<AuthService>(context);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Sizes.scaleHorizontal * 5),
       child: Form(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Column(children: [
-          SizedBox(height: Sizes.scaleVertical * 8),
-          TextFormField(
-              autocorrect: false,
-              cursorColor: AppTheme.primary,
-              onChanged: (value) => settingsForm.name = value,
-              decoration: InputDecorations.formDecoration(label: "Nombre")),
-          SizedBox(height: Sizes.scaleVertical * 3),
-          TextFormField(
-              autocorrect: false,
-              cursorColor: AppTheme.primary,
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (value) => settingsForm.email = value,
-              decoration: InputDecorations.formDecoration(label: "Email")),
-          SizedBox(height: Sizes.scaleVertical * 3),
-          const PasswordInput(),
-          SizedBox(height: Sizes.scaleVertical * 3),
-          const SubmitButton(
-            title: 'Guardar',
-          ),
-          SizedBox(height: Sizes.scaleVertical * 5),
-          TextButton(
-            onPressed: () {
-              final authService =
-                  Provider.of<AuthService>(context, listen: false);
-              authService.logout();
-              Navigator.pushReplacementNamed(context, 'login');
-            },
-            child: const Text("Cerrar sesión"),
-          ),
-          SizedBox(height: Sizes.scaleVertical),
-          TextButton(
-            onPressed: () {},
-            child: const Text("Eliminar cuenta"),
-          )
-        ]),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: Sizes.scaleVertical * 8),
+                child: TextFormField(
+                    initialValue: userProvider.user != null
+                        ? userProvider.user?.email
+                        : "",
+                    autocorrect: false,
+                    enabled: false,
+                    cursorColor: AppTheme.primary,
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (value) => settingsForm.email = value,
+                    decoration:
+                        InputDecorations.formDecoration(label: "Email")),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: Sizes.scaleVertical * 8),
+                child: Column(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        final authService =
+                            Provider.of<AuthService>(context, listen: false);
+                        authService.logout();
+                        Navigator.pushReplacementNamed(context, 'login');
+                      },
+                      child: const Text("Cerrar sesión"),
+                    ),
+                    SizedBox(height: Sizes.scaleVertical),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text("Eliminar cuenta"),
+                    )
+                  ],
+                ),
+              )
+            ]),
       ),
     );
   }

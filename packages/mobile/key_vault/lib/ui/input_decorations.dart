@@ -33,6 +33,9 @@ class InputDecorations {
         filled: false,
         hintText: hintText,
         label: Text(label),
+        disabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppTheme.primary, width: 1),
+            borderRadius: BorderRadius.circular(10)),
         suffixIcon: suffixIcon,
         errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 1),
