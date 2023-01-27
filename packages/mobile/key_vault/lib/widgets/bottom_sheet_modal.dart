@@ -4,6 +4,7 @@ import 'package:key_vault/services/password_service.dart';
 import 'package:key_vault/utils/sizes.dart';
 import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BottomSheetModal extends StatelessWidget {
   final String id;
@@ -58,6 +59,17 @@ class _BottomSheetContent extends StatelessWidget {
       Navigator.of(context).pop();
     }
 
+    Future<void> launchExplorerWithUrl(String url) async {
+      if (url == "") return;
+      final parsedUrl = Uri.parse(url);
+      try {
+        await launchUrl(parsedUrl);
+      } catch (e) {
+        // ignore: avoid_print
+        print(e);
+      }
+    }
+
     return Stack(children: [
       Column(
         children: [
@@ -79,16 +91,21 @@ class _BottomSheetContent extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 17, color: Colors.black45),
           ),
-          Text(
-            password.url ?? "",
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-                fontSize: 17,
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.normal,
-                color: Colors.black45),
+          GestureDetector(
+            onTap: () {
+              launchExplorerWithUrl(password.url ?? "");
+            },
+            child: Text(
+              password.url ?? "",
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 17,
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black45),
+            ),
           ),
           SizedBox(
             height: Sizes.scaleVertical * 2,
