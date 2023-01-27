@@ -36,7 +36,6 @@ public class UserService {
 				.parseClaimsJws(token)
 				.getBody();
 		Date expirationDate = claims.getExpiration();
-		System.out.println(expirationDate);
 		UserDTO userDTO2 = mappingDTO(newUser);
 		UserResponse responseUser = mappingResponse(userDTO2);
 		responseUser.setToken(token);
@@ -47,7 +46,16 @@ public class UserService {
 	public UserResponse findUserById(int id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 		UserDTO userDTO = mappingDTO(user);
+		String token = TokenUtils.createToken(id);
+		Claims claims = Jwts.parserBuilder()
+				.setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+				.build()
+				.parseClaimsJws(token)
+				.getBody();
+		Date expirationDate = claims.getExpiration();
 		UserResponse userResponse = mappingResponse(userDTO);
+		userResponse.setToken(token);
+		userResponse.setExpirationDate(expirationDate);
 		return userResponse;
 	}
 	

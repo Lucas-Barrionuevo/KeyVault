@@ -29,19 +29,6 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired(required=false)
-	private TokenUtils tokenUtils;
-	
-	@GetMapping()
-	public ResponseEntity<?> getUser(HttpServletRequest request){
-		TokenUtils tokenUtils = new TokenUtils();
-		int userId = tokenUtils.getIdByToken(request);
-		Optional<User> user = userRepository.findById(userId);
-		if (user.get().getEnabled() == false) {
-			return new ResponseEntity<>("The account does not exist", HttpStatus.BAD_REQUEST);
-		}
-		return ResponseEntity.ok(userService.findUserById(userId));
-	}
 	
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO userDTO){

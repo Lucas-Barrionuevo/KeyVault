@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 public class Icon {
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
+	
 	private int id;
 	@Column(nullable = false)
 	private String domain;
