@@ -26,8 +26,7 @@ class AddPasswordScreen extends StatelessWidget {
     Sizes(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      resizeToAvoidBottomInset: false,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final isValid = passwordForm.isValidForm();

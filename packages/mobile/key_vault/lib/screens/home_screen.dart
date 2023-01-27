@@ -8,6 +8,8 @@ import 'package:key_vault/utils/sizes.dart';
 import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
+enum Options { signup, delete }
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -117,15 +119,49 @@ class _Head extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: Sizes.scaleVertical * 2),
-      child: CircleAvatar(
-        backgroundColor: AppTheme.primary,
-        child: Padding(
-          padding: EdgeInsets.all(Sizes.scaleVertical * 0.9),
-          child: SvgPicture.asset(
-            assetName,
-            color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CircleAvatar(
+            backgroundColor: AppTheme.primary,
+            child: Padding(
+              padding: EdgeInsets.all(Sizes.scaleVertical * 0.9),
+              child: SvgPicture.asset(
+                assetName,
+                color: Colors.white,
+              ),
+            ),
           ),
-        ),
+          PopupMenuButton(
+            position: PopupMenuPosition.under,
+            icon: const Icon(
+              Icons.more_vert,
+              color: AppTheme.primary,
+            ),
+            onSelected: (value) {
+              switch (value) {
+                case Options.signup:
+                  final authService =
+                      Provider.of<AuthService>(context, listen: false);
+                  authService.logout();
+                  Navigator.pushReplacementNamed(context, 'login');
+                  break;
+                case Options.delete:
+                  break;
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<Options>>[
+              const PopupMenuItem<Options>(
+                value: Options.signup,
+                child: Text('Cerrar sesión'),
+              ),
+              const PopupMenuItem<Options>(
+                value: Options.delete,
+                child: Text('Eliminar cuenta'),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

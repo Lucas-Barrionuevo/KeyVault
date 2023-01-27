@@ -15,9 +15,10 @@ class _AuthPasswordInputState extends State<AuthPasswordInput> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: TextInputType.none,
+      keyboardType: TextInputType.visiblePassword,
       obscureText: passwordVisible,
       cursorColor: AppTheme.primary,
+      autocorrect: false,
       onChanged: widget.onChanged,
       decoration: InputDecorations.authInputDecoration(
           labelText: 'Contraseña',

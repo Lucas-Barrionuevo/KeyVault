@@ -39,7 +39,6 @@ class BottomNav extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: 'QR'),
           BottomNavigationBarItem(icon: Icon(Icons.key), label: 'Claves'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Ajustes'),
         ]);
   }
 }

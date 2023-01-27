@@ -12,9 +12,7 @@ class MainBottomNavScreen extends StatelessWidget {
     final index = bottomNavProvider.selectedMenuOpt;
     final screens = {
       0: const HomeScreen(),
-      1: Container(),
       2: const PasswordsScreen(),
-      3: const SettingsScreen()
     };
     return Scaffold(
       bottomNavigationBar: const BottomNav(),

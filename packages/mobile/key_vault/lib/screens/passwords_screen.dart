@@ -20,6 +20,7 @@ class PasswordsScreen extends StatelessWidget {
         Platform.isAndroid ? Sizes.scaleVertical * 12 : Sizes.scaleVertical * 8;
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed('add_password_screen');

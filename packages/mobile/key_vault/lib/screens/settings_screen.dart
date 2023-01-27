@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:key_vault/providers/auth_provider.dart';
+
 import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/services/auth_service.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
 import 'package:key_vault/utils/sizes.dart';
-import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -16,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
     Sizes(context);
     return Scaffold(
       body: Column(
-        children: const [_Header(), Expanded(child: _SettingsForm())],
+        children: const [_Header(), _SettingsForm()],
       ),
     );
   }
