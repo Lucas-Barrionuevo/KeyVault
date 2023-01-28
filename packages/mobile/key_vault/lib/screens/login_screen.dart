@@ -4,8 +4,10 @@ import 'package:key_vault/providers/providers.dart';
 import 'package:key_vault/services/auth_service.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:key_vault/ui/input_decorations.dart';
+import 'package:key_vault/utils/sizes.dart';
 import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -30,7 +32,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              const _ForgotMyPasswordButton(),
+              // const _ForgotMyPasswordButton(),
               AuthTextAndButton(
                 onTap: () {},
                 text1: '¿No tienes una cuenta?',
@@ -44,6 +46,7 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _ForgotMyPasswordButton extends StatelessWidget {
   const _ForgotMyPasswordButton({
     Key? key,
@@ -66,6 +69,27 @@ class _LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
     final authProvider = Provider.of<AuthService>(context);
+    void showSnackbar() {
+      AnimatedSnackBar(
+        mobileSnackBarPosition: MobileSnackBarPosition.top,
+        snackBarStrategy: RemoveSnackBarStrategy(),
+        builder: ((context) {
+          return Container(
+            height: Sizes.scaleVertical * 6,
+            width: Sizes.scaleHorizontal * 50,
+            decoration: const BoxDecoration(
+                color: Color(0xffEEEEEE),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            child: const Center(
+                child: Text(
+              'Error al iniciar sesión',
+              style: TextStyle(color: Colors.black),
+            )),
+          );
+        }),
+      ).show(context);
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       key: loginForm.formKey,
@@ -105,6 +129,8 @@ class _LoginForm extends StatelessWidget {
                       Navigator.pushReplacementNamed(
                           context, 'main_bottom_nav_screen');
                       bottomNavProvider.selectedMenuOpt = 0;
+                    } else {
+                      showSnackbar();
                     }
                   },
           )
