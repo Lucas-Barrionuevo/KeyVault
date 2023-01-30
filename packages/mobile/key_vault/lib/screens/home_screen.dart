@@ -147,6 +147,12 @@ class _Head extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, 'login');
                   break;
                 case Options.delete:
+                  final authService =
+                      Provider.of<AuthService>(context, listen: false);
+                  authService.deleteAccount().then((value) => value
+                      ? Navigator.pushReplacementNamed(context, 'login')
+                      : null);
+
                   break;
               }
             },

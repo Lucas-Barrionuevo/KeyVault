@@ -86,4 +86,19 @@ class AuthService extends ChangeNotifier {
   Future<String> readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
+
+  Future<bool> deleteAccount() async {
+    final token = await readToken();
+    if (token == "") return false;
+    final apiUrl = Uri.https(_baseUrl, '/user/${user?.id}');
+    final resp = await http.delete(
+      apiUrl,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (!ServicesUtils.isOk(resp)) return false;
+    await logout();
+    return true;
+  }
 }
