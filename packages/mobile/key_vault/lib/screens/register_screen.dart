@@ -9,8 +9,8 @@ import 'package:key_vault/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +36,10 @@ class LoginScreen extends StatelessWidget {
               // const _ForgotMyPasswordButton(),
               AuthTextAndButton(
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, 'register');
+                  Navigator.pushReplacementNamed(context, 'login');
                 },
-                text1: '¿No tienes una cuenta?',
-                text2: 'Registrate',
+                text1: '¿Ya tienes una cuenta?',
+                text2: 'Inicia sesión',
               )
             ],
           ),
@@ -85,7 +85,7 @@ class _LoginForm extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(20))),
             child: const Center(
                 child: Text(
-              'Error al iniciar sesión',
+              'Error al Registrarte',
               style: TextStyle(color: Colors.black),
             )),
           );
@@ -115,7 +115,7 @@ class _LoginForm extends StatelessWidget {
             height: 25,
           ),
           SubmitButton(
-            title: "Iniciar sesión",
+            title: "Registrarse",
             isLoading: authProvider.isLoading,
             onPressed: authProvider.isLoading
                 ? null
@@ -125,7 +125,7 @@ class _LoginForm extends StatelessWidget {
                     final bottomNavProvider =
                         Provider.of<BottomNavProvider>(context, listen: false);
                     //TODO: error manage
-                    final errorMessage = await authService.login(
+                    final errorMessage = await authService.register(
                         loginForm.email, loginForm.password);
                     if (errorMessage == null) {
                       // ignore: use_build_context_synchronously
@@ -153,7 +153,7 @@ class _Subtitle extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 2),
       child: const Text(
-        'Manten tus datos seguros',
+        'Y manten tus datos seguros',
         style: TextStyle(
             fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black87),
       ),
@@ -170,7 +170,7 @@ class _Title extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
-      child: Text('¡Bienvenido a Key Vault!',
+      child: Text('¡Registrate en Key Vault!',
           style: Theme.of(context)
               .textTheme
               .headlineSmall

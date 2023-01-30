@@ -1,3 +1,4 @@
+export 'package:key_vault/screens/register_screen.dart';
 export 'package:key_vault/screens/check_auth_screen.dart';
 export 'package:key_vault/screens/passwords_screen.dart';
 export 'package:key_vault/screens/settings_screen.dart';

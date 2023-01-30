@@ -26,7 +26,7 @@ class AuthService extends ChangeNotifier {
     if (decodedResp["token"] != null) {
       await storage.write(key: 'token', value: decodedResp['token']);
     }
-    user = decodedResp as User;
+    user = User.fromJson(decodedResp);
     isLoading = false;
     notifyListeners();
     return null;
