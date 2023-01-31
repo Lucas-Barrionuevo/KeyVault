@@ -5,8 +5,12 @@ import 'package:key_vault/screens/screens.dart';
 import 'package:key_vault/services/services.dart';
 import 'package:key_vault/theme/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() => runApp(const AppState());
+Future main() async {
+  await dotenv.load(fileName: ".env");
+  runApp(const AppState());
+}
 
 class AppState extends StatelessWidget {
   const AppState({super.key});

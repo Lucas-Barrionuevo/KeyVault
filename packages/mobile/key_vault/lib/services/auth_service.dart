@@ -5,9 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:key_vault/models/models.dart';
 import 'package:key_vault/utils/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthService extends ChangeNotifier {
-  final String _baseUrl = "api-dev.keyvault.me";
+  final String _baseUrl = dotenv.env['BACKEND_URL']!;
   User? user;
   final storage = const FlutterSecureStorage();
   bool isLoading = false;

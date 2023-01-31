@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:key_vault/models/models.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class PasswordService extends ChangeNotifier {
   bool isLoading = false;
-  final String _baseUrl = "api-dev.keyvault.me";
+  final String _baseUrl = dotenv.env['BACKEND_URL']!;
   List<Password> passwords = [];
   late Password selectedPassword;
   final storage = const FlutterSecureStorage();
