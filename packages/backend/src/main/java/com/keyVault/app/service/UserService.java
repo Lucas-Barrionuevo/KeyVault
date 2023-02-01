@@ -74,6 +74,7 @@ public class UserService {
 	public void deleteUser(int id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 		user.setEnabled(false);
+		userRepository.save(user);
 	}
 	
 	public UserDTO mappingDTO (User user) {

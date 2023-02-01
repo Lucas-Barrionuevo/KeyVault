@@ -47,7 +47,7 @@ public class UserController {
 		}
 		return new ResponseEntity<>(userService.updateUser(userDTO, userId),HttpStatus.OK);
 	}
-	@DeleteMapping("/{id}")
+	@DeleteMapping()
 	public ResponseEntity<?> deleteUser(HttpServletRequest request){
 		TokenUtils tokenUtils = new TokenUtils();
 		int userId = tokenUtils.getIdByToken(request);

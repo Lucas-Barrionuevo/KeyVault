@@ -61,8 +61,4 @@ public class WebSecurityConfig {
 		this.userDetailsService = userDetailsService;
 		this.jwtAuthorizationFilter = jwtAuthorizationFilter;
 	}
-	
-	/*public static void main (String[] args) {
-		System.out.println("password " + new BCryptPasswordEncoder().encode("prueba"));
-	}*/
 }
