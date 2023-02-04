@@ -19,6 +19,11 @@ public class Icon {
 	@Column(nullable = false)
 	private String url;
 	
+	public Icon(String domain, String url) {
+		super();
+		this.domain = domain;
+		this.url = url;
+	}
 	public Icon() {
 		super();
 	}

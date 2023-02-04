@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.keyVault.app.dto.IconDTO;
-import com.keyVault.app.entity.User;
 import com.keyVault.app.service.IconService;
-import com.keyVault.app.service.UserService;
 
 import jakarta.validation.Valid;
 @RestController

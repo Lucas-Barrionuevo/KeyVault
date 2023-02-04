@@ -26,6 +26,15 @@ public class User {
 	public User() {
 		super();
 	}
+	
+	public User(String email, String password, Date createdAt, boolean enabled) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.createdAt = createdAt;
+		this.enabled = enabled;
+	}
+
 	public int getId() {
 		return id;
 	}
