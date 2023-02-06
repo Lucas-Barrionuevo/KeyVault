@@ -36,11 +36,10 @@ public class Category {
 		super();
 	}
 	
-	public Category(String name, String preview, User user) {
+	public Category(String name, String preview) {
 		super();
 		this.name = name;
 		this.preview = preview;
-		this.user=user;
 	}
 
 	public User getUser() {

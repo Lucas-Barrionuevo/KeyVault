@@ -12,6 +12,13 @@ public class IconDTO {
 	@Size(min=2, message = "The url must have at least 2 characters")
 	private String url;
 	
+	public IconDTO(@NotEmpty @Size(min = 2, message = "The icon domain must have at least 2 characters") String domain,
+			@NotEmpty @Size(min = 2, message = "The url must have at least 2 characters") String url) {
+		super();
+		this.domain = domain;
+		this.url = url;
+	}
+
 	public IconDTO() {
 		super();
 	}

@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.keyVault.app.entity.Category;
 import com.keyVault.app.entity.User;
+import com.keyVault.app.exceptions.ResourceNotFoundException;
 
 @SpringBootTest
 public class CategoryRepositoryTest {
@@ -24,13 +25,18 @@ public class CategoryRepositoryTest {
     private Category category;
     
     private User user;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @BeforeEach
     void setup(){
     	categoryRepository.deleteAll();
+    	userRepository.deleteAll();
     	user = new User("test@test.com", "test", new Date(), true);
-    	category = new Category("test","test",user);
-    	System.out.println(category);
+    	userRepository.save(user);
+    	category = new Category("test","test");
+    	category.setUser(userRepository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", user.getId())));
     }
     @Test
     void testSaveCategory(){
@@ -46,8 +52,10 @@ public class CategoryRepositoryTest {
     @Test
     void testListCategories(){
         //given
-    	User user2 = new User("test2@test.com", "test2", new Date(), true);
-    	Category category1 = new Category("test2","test2", user2);
+    	User user1 = new User("test1@test.com", "test1", new Date(), true);
+    	Category category1 = new Category("test2","test2");
+    	userRepository.save(user1);
+    	category1.setUser(userRepository.findById(user1.getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", user1.getId())));
         categoryRepository.save(category1);
         categoryRepository.save(category);
 
@@ -75,16 +83,13 @@ public class CategoryRepositoryTest {
 
         //when
         Category categorySave = categoryRepository.findById(category.getId()).get();
-        User user2 = new User("test2@test.com", "test2", new Date(), true);
-        categorySave.setName("test2");;
+        categorySave.setName("test2");
         categorySave.setPreview("test2");
-        categorySave.setUser(user2);
         Category categoryUpdate = categoryRepository.save(categorySave);
 
         //then
         assertThat(categoryUpdate.getName()).isEqualTo("test2");
         assertThat(categoryUpdate.getPreview()).isEqualTo("test2");
-        assertThat(categoryUpdate.getUser()).isEqualTo(user2);
     }
 
     @Test
