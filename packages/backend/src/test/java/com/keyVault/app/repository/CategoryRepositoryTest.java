@@ -36,7 +36,7 @@ public class CategoryRepositoryTest {
     	user = new User("test@test.com", "test", new Date(), true);
     	userRepository.save(user);
     	category = new Category("test","test");
-    	category.setUser(userRepository.findById(user.getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", user.getId())));
+    	category.setUser(user);
     }
     @Test
     void testSaveCategory(){
@@ -55,7 +55,7 @@ public class CategoryRepositoryTest {
     	User user1 = new User("test1@test.com", "test1", new Date(), true);
     	Category category1 = new Category("test2","test2");
     	userRepository.save(user1);
-    	category1.setUser(userRepository.findById(user1.getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "id", user1.getId())));
+    	category1.setUser(user);
         categoryRepository.save(category1);
         categoryRepository.save(category);
 

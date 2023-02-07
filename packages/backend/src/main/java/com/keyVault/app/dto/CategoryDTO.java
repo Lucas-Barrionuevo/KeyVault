@@ -23,6 +23,14 @@ public class CategoryDTO {
 		super();
 	}
 	
+	public CategoryDTO(
+			@NotEmpty @Size(min = 2, message = "The category name must have at least 2 characters") @Size(max = 30, message = "The category name must be less than 30 characters") String name,
+			String preview) {
+		super();
+		this.name = name;
+		this.preview = preview;
+	}
+
 	public User getUser() {
 		return user;
 	}

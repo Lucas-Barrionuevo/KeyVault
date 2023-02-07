@@ -103,6 +103,12 @@
 		    <version>1.17.6</version>
 		    <scope>test</scope>
 		</dependency>
+		<dependency>
+		    <groupId>org.unitils</groupId>
+		    <artifactId>unitils-core</artifactId>
+		    <version>3.4.6</version>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

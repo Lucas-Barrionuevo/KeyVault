@@ -16,6 +16,16 @@ public class UserDTO {
 	private Date createdAt;
 	private boolean enabled;
 	
+	public UserDTO(@NotEmpty @Email(message = "The email entered is invalid") String email,
+			@NotEmpty @Size(min = 2, message = "The password must have at least 2 characters") @Size(max = 30, message = "The password must be less than 30 characters") String password,
+			Date createdAt, boolean enabled) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.createdAt = createdAt;
+		this.enabled = enabled;
+	}
+
 	public UserDTO() {
 		super();
 	}

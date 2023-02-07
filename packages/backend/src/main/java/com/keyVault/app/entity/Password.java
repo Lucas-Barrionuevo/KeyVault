@@ -40,6 +40,15 @@ public class Password {
 	
 	private String url;
 
+	public Password(String content, String name, String userOrMail,Date createdAt, String url) {
+		super();
+		this.content = content;
+		this.name = name;
+		this.userOrMail = userOrMail;
+		this.createdAt = createdAt;
+		this.url = url;
+	}
+
 	public Password() {
 		super();
 	}

@@ -32,6 +32,18 @@ public class PasswordDTO {
 		super();
 	}
 
+	public PasswordDTO(
+			@NotEmpty @Size(min = 2, message = "The password content must have at least 2 characters") @Size(max = 30, message = "The password content must be less than 30 characters") String content,
+			@NotEmpty String name, String userOrMail, Date createdAt, String categoryName, String url) {
+		super();
+		this.content = content;
+		this.name = name;
+		this.userOrMail = userOrMail;
+		this.createdAt = createdAt;
+		this.categoryName = categoryName;
+		this.url = url;
+	}
+
 	public String getName() {
 		return name;
 	}

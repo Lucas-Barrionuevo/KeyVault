@@ -93,7 +93,7 @@ public class IconServiceTest {
     }
 
     @Test
-    void testActualizarEmpleado(){
+    void testUpdateIcon(){
         //given
     	given(modelMapper.map(icon, IconDTO.class)).willReturn(iconDTO);
         given(iconRepository.save(icon)).willReturn(icon);
